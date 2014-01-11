@@ -1,12 +1,15 @@
-<%# navigation styled for Zurb Foundation 4 %>
-<nav class="top-bar">
-  <ul class="title-area">
-    <li class="name"><%= link_to 'Home', root_path %></li>
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-  <div class="top-bar-section">
-    <ul>
-      <%= render 'layouts/navigation_links' %>
-    </ul>
-  </div>
-</nav>
+<%= link_to "Home", root_path, :class => 'brand' %>
+<ul class="nav">
+  <% if user_signed_in? %>
+    <li>
+    Logged in as <%= current_user.name %>
+    </li>
+    <li>
+    <%= link_to 'Logout', signout_path %>
+    </li>
+  <% else %>
+    <li>
+    <%= link_to 'Login', signin_path %>
+    </li>
+  <% end %>
+</ul>
