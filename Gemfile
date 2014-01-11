@@ -13,6 +13,14 @@ gem 'figaro'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'zurb-foundation', '~> 4.3.2'
+#  /\ from rails composer
+
+gem 'backbone-on-rails'
+gem 'responders'
+gem 'bootstrap-sass'
+gem 'rails_layout'
+
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
@@ -21,4 +29,6 @@ group :development do
 end
 group :production do
   gem 'unicorn'
+  gem 'pg'
+  gem 'rails_12factor'
 end
