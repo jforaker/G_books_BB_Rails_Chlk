@@ -42,3 +42,21 @@ gem 'jbuilder', '~> 1.2'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'compass-rails', '~> 1.1.2'
+gem 'figaro'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'zurb-foundation', '~> 4.3.2'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  gem 'quiet_assets'
+  gem 'rails_layout'
+end
+
+group :production do
+  gem 'unicorn'
+end
+
