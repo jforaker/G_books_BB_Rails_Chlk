@@ -11,10 +11,17 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require modernizr
 //= require jquery_ujs
+//= require jquery.ui.autocomplete
 //= require underscore
 //= require backbone
 //= require bootstrap
+//= require sidr
+//= require classie
+//= require classie
+//= require gnmenu
+//= require bookshelf
 //
 //= require g_books
 //= require_tree ../templates

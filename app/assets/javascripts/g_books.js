@@ -33,4 +33,5 @@ window.GoogleBooks = {
 
 $(document).ready(function(){
     GoogleBooks.initialize();
+
 });

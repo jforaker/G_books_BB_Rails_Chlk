@@ -42,7 +42,7 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    item_params = params.require(:book).permit( :thumbnail, :title, :volumeInfo, :wantToRead )
+    item_params = params.require(:book).permit( :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink )
     #:volumeInfo => [:title]
     @item = Book.new(item_params)
 
@@ -60,19 +60,10 @@ class BooksController < ApplicationController
   # PUT /books/1
   # PUT /books/1.json
   def update
-    item_params = params.require(:book).permit(wantToRead: params[:item][:wantToRead])
+    item_params = params.require(:book).permit(wantToRead: params[:item][:wantToRead], readerLink: params[:item][:readerLink])
     @item = Book.find(params[:id])
     respond_to do |format|
-      if @item.update_attributes(
-
-          # title: params[:item][:title],
-          #image: params[:item][:image],
-          #currentPrice: params[:item][:currentPrice],
-          #link: params[:item][:link],
-          #endTime: params[:item][:endTime],
-
-          item_params
-      )
+      if @item.update_attributes(item_params)
 
         #if @item.update_attributes(params[item_params])
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }

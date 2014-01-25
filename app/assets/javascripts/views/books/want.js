@@ -6,7 +6,6 @@ GoogleBooks.Views.Want = Backbone.View.extend({
     events:{
         'click #removeAll' : 'removeAll',
         'click #showAllWants' : 'showAllWants'
-
     },
 
     initialize : function() {

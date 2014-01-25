@@ -2,7 +2,7 @@ GoogleBooks.Views.Book = Backbone.View.extend({
     template : JST['books/book'],
     className: 'col-md-3 item',
     attributes: {
-        "data-attr": "mydata"
+        "data-book": "book-item"
     },
 
     events : {

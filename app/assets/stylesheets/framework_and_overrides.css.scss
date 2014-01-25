@@ -130,6 +130,10 @@
   box-shadow: inset 0 -2px rgba(255,255,255,0.1),inset 0 -3px rgba(0,0,0,0.1),0 1px rgba(0,0,0,0.05);
   max-height: 300px;
 
+  img{
+    box-shadow:  4px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
   &.tile-hot:before {
     background: url(../images/tile/ribbon.png) 0 0 no-repeat;
     background-size: 82px 82px;
@@ -150,6 +154,9 @@
   //height: 100px;
   margin: 31px 0 27px;
   vertical-align: bottom;
+
+
+
   &.big-illustration {
     //height: 111px;
     margin-top: 20px;

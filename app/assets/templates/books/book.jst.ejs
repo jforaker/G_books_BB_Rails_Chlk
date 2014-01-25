@@ -1,18 +1,27 @@
 
 
 <div class="tile">
-    <img class="" src="<%= thumbnail %>">
-
-    <h4 class="tile-title"><%= title %></h4>
-    <a id="deets" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deetsModal">
-      see details...
-    </a>
-
-        <div class="tagsinput">
-        <span class="tag">
-            <span>Remove &nbsp;</span>
-            <a class="remove-item tagsinput-remove-link"></a>
-        </span>
+<figure>
+        <div class="book" data-book="book-1"><img class="" src="<%= thumbnail %>"></div>
+        <div class="buttons">
+            <a href="#" class="btn" id="deets" data-toggle="modal" data-target="#deetsModal">Look inside</a>
+            <a href="#">Details</a>
         </div>
+        <figcaption><h5><%= title %> <span> __ author __</span></h5></figcaption>
+        <div class="details">
+                <ul>
+                        <li><%= title %></li>
+                        <li>Graham Press</li>
+                        <li>12.09.2010</li>
+                        <li>397 pages</li>
+                </ul>
 
+                        <div class="tagsinput">
+                        <span class="tag">
+                            <span>Remove &nbsp;</span>
+                            <a class="remove-item tagsinput-remove-link"></a>
+                        </span>
+                        </div>
+        </div>
+</figure>
 </div>
