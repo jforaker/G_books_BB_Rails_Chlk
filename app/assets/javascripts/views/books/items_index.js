@@ -5,15 +5,15 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
     events : {
         'keypress #add-item': 'createOnEnter',
         "keyup": "searchAutocomplete"
-
     },
 
     initialize : function() {
         this.listenTo(this.collection, 'reset', this.render);
-        return this.listenTo(this.collection, 'add', this.addItem);
+        return this.listenTo(this.collection, 'add', this.addBook);
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $('#deetsModal').remove();
+
 
     },
 
@@ -37,18 +37,21 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
         wantView.render();
 
-        this.collection.each(function(item) {
-            var itemview;
-            itemview = new GoogleBooks.Views.Book({
-                model: item
+        //TODO -- check that this renders the wants to the all-wants div
+
+        //itemsCollection
+        this.collection.each(function(bookModel) {
+            var bookView = new GoogleBooks.Views.Book({
+                model: bookModel
             });
-            var row = itemview.render().el;
-            this.$('.row').append(row);
+            var renderBook = bookView.render().el;
+            this.$('#all-wants').append(renderBook);
+
             return this;
 
         });
 
-        new gnMenu( document.getElementById( 'gn-menu' ) );
+        new gnMenu( document.getElementById( 'gn-menu' ), null );
 
     },
 
@@ -65,10 +68,10 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                     $.getJSON(url + '&callback=?', function(data) {
                         var dropdown = [];
                         _.each(data.items, function(item) {
-                            var ele = {},
-                                subtitle = typeof item.volumeInfo.subtitle !== "undefined" ? ': '+item.volumeInfo.subtitle : '',
-                                thumb = typeof item.volumeInfo.imageLinks !== "undefined" ? item.volumeInfo.imageLinks.thumbnail : '';
-                            var ele = item.volumeInfo.title.concat(subtitle);
+
+                            var subtitle = typeof item.volumeInfo.subtitle !== "undefined" ? ': '+item.volumeInfo.subtitle : '',
+                                thumb = typeof item.volumeInfo.imageLinks !== "undefined" ? item.volumeInfo.imageLinks.thumbnail : '',
+                                ele = item.volumeInfo.title.concat(subtitle);
 
                             dropdown.push({
                                 label: ele,
@@ -95,118 +98,125 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         })
     },
 
-        createOnEnter : function(event) {
-            if (event.keyCode !== 13) {
-                return;
-            }
-            var query = this.$('#add-item').val();
-            this.search(event, query);
-            return this.$('#add-item').val('');
-        },
+    createOnEnter : function(event) {
+        if (event.keyCode !== 13) {
+            return;
+        }
+        var query = this.$('#add-item').val();
+        this.search(event, query);
+        return this.$('#add-item').val('');
+    },
 
 
-        vars: function(){
-            var data = {
-                //Please use you're own API key, thanks!
-                API_KEY: 'AIzaSyCHOnYhOr4Bo0pb0DqM_qUBjFShowf2-dw',
-                BACKUP_KEY: 'AIzaSyDy6qMWnHsz18JB1SWzBMLBFUyJmyw7cQ4',
-                MAX_DEFAULT: 12,
-                TOPICS: [ "Arts", "Music", "Poetry", "Cooking",	"Psychology", "Travel", "Spirituality", "Science", "Romance", "Suspense" ]
-            };
-            return data;
-        },
+    vars: function(){
+        return data = {
+            API_KEY: 'AIzaSyCHOnYhOr4Bo0pb0DqM_qUBjFShowf2-dw',
+            BACKUP_KEY: 'AIzaSyDy6qMWnHsz18JB1SWzBMLBFUyJmyw7cQ4',
+            MAX_DEFAULT: 12
+        }
+    },
 
-        search: function(e, query){
-            e.preventDefault();
-            //$('#books').html('');
-            this.queryApi(query, index='0', this.vars().MAX_DEFAULT);
-            window.location.hash = '';
-        },
+    search: function(e, query){
+        Backbone.history.navigate('/search');
 
-        doAjax: function (url, data) {
-            return $.ajax({
-                dataType: 'jsonp',
-                data: data,
-                cache: false,
-                url: url
-            });
-        },
+        e.preventDefault();
 
-        queryApi: function(term, index, maxResults) {
-            var that = this;
-            var aj,
-                self = this,
-                $books = $('#books'),
-                url = 'https://www.googleapis.com/books/v1/volumes?',
-                data = 'q='+encodeURIComponent(term)
-                    +'&startIndex='+index+'&maxResults='+maxResults
-                    +'&filter=free-ebooks&key='
-                    +this.vars().API_KEY+'&projection=full';
+        $('.bookshelf').fadeIn();
 
-            //Show loading indicator
-            var spinner = '<div class="spinner"></div>' ;
-            $('#app').append(spinner);
-            $(spinner).show();
+        var $myBooksView = $('#all-wants');
 
-            aj = this.doAjax(url, data);
+        if ($myBooksView.is(':visible')) {
+            $myBooksView.fadeOut('fast');
+        }
 
-            //jQuery promise object tells us when ajax is done
-            aj.done(function () {
-                var Books = that.collection,
-                    data = aj.responseJSON,
-                    emptyBooks = 0;
+        this.queryApi(query, index='0', this.vars().MAX_DEFAULT);
 
-                //Traverse the API response and put each JSON book into a model
-                if (data) {
+    },
 
-                    //If API quota runs out
-                    //give a message
-                    data.error = data.error || {};
-                    data.error.message = data.error.message || {};
-                    if (data.error.message === 'Daily Limit Exceeded') {
-                        _.once(self.deadApi(data.error.message));
-                    }
+    doAjax: function (url, data) {
+        return $.ajax({
+            dataType: 'jsonp',
+            data: data,
+            cache: false,
+            url: url
+        });
+    },
 
-                    _.each(data.items, function(item) {
+    queryApi: function(term, index, maxResults) {
+        var that = this;
+        var aj,
+            self = this,
+            $books = $('#books'),
+            url = 'https://www.googleapis.com/books/v1/volumes?',
+            data = 'q='+encodeURIComponent(term)
+                +'&startIndex='+index+'&maxResults='+maxResults
+                +'&filter=free-ebooks&key='
+                +this.vars().API_KEY+'&projection=full';
 
-                        //MUST have thumbnail and be embeddable in reader
+        //Show loading indicator
+        var spinner = '<div class="spinner"></div>' ;
+        $('#app').append(spinner);
+        $(spinner).show();
 
-                        if (typeof item.volumeInfo.imageLinks !== "undefined" && item.accessInfo.embeddable == true) {
+        aj = this.doAjax(url, data);
 
-                            var itemInfo = {
-                                volumeInfo : item.volumeInfo || {},
-                                title: item.volumeInfo.title,
-                                thumbnail : item.volumeInfo.imageLinks.thumbnail || '',
-                                readerLink : item.id,
-                                wantToRead: false
-                            };
+        //jQuery promise object tells us when ajax is done
+        aj.done(function () {
+            //var Books = new GoogleBooks.Collections.TemporaryCollection(),
 
-                            var book = new GoogleBooks.Models.Book(itemInfo);
+            var Books = that.collection,
+                data = aj.responseJSON,
+                emptyBooks = 0;
 
-                            Books.add(book);
+            //Traverse the API response and put each JSON book into a model
+            if (data) {
 
-                            console.log(book);
-                        } else {
-                            emptyBooks++;
-                        }
-                    });
+                //If API quota runs out
+                //give a message
+                data.error = data.error || {};
+                data.error.message = data.error.message || {};
+                if (data.error.message === 'Daily Limit Exceeded') {
+                    _.once(self.deadApi(data.error.message));
                 }
 
-                $(spinner).hide();
-                //Remove old ajax data
-                delete aj;
+                _.each(data.items, function(item) {
 
-            });
-        },
+                    //MUST have thumbnail and be embeddable in reader
 
-        addItem : function(item) {
-            var itemview;
-            itemview = new GoogleBooks.Views.Book({
-                model: item
-            });
-            var row = itemview.render().el ;
+                    if (typeof item.volumeInfo.imageLinks !== "undefined" && item.accessInfo.embeddable == true) {
 
-            this.$('.row').append(row);
-            return this;
-        }
-    });
+                        var itemInfo = {
+                            title: item.volumeInfo.title || '',
+                            author: item.volumeInfo.authors ? item.volumeInfo.authors[0] : '',
+                            pageCount : item.volumeInfo.pageCount || '',
+                            publishedDate : item.volumeInfo.publishedDate || '' ,
+                            thumbnail : item.volumeInfo.imageLinks.thumbnail || '',
+                            readerLink : item.id,
+                            wantToRead: false
+                        };
+
+                        var book = new GoogleBooks.Models.Book(itemInfo);
+                        Books.add(book);
+
+                        console.log(book);
+                    } else {
+                        emptyBooks++;
+                    }
+                });
+            }
+            $(spinner).hide();
+            //Remove old ajax data
+            delete aj;
+        });
+    },
+
+    addBook : function(book) {
+        var bookView = new GoogleBooks.Views.Book({
+            model: book
+        });
+        var bookEl = bookView.render().el ;
+        $(bookEl).attr("data-something", "from-search");
+        this.$('.row').append(bookEl);
+        return this;
+    }
+});

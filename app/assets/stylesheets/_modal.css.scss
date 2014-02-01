@@ -1,0 +1,44 @@
+.modal-dialog{
+
+  height: 95%;
+  width: 81%;
+
+  .modal-content{
+
+    height: 98% !important;
+
+    .modal-header{
+      padding: 10px;
+      border: none !important;
+
+      H2{
+        font-family: 'DroidSerif-Bold' serif;
+        font-size: 22px;
+        margin-top: 4px;
+        margin-bottom: 0px;
+        text-decoration: underline;
+      }
+    }
+
+    .modal-body{
+      padding: 5px;
+      height: 81% !important;
+
+      #viewerCanvas{
+        height: 95%;
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+
+    .modal-footer{
+      margin-top: 0;
+      padding: 5px;
+      text-align: center;
+      border:none;
+    }
+  }
+
+}
+
+

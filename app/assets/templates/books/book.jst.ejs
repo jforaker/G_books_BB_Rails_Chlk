@@ -1,27 +1,26 @@
 
 
-<div class="tile">
 <figure>
-        <div class="book" data-book="book-1"><img class="" src="<%= thumbnail %>"></div>
-        <div class="buttons">
-            <a href="#" class="btn" id="deets" data-toggle="modal" data-target="#deetsModal">Look inside</a>
-            <a href="#">Details</a>
-        </div>
-        <figcaption><h5><%= title %> <span> __ author __</span></h5></figcaption>
-        <div class="details">
-                <ul>
-                        <li><%= title %></li>
-                        <li>Graham Press</li>
-                        <li>12.09.2010</li>
-                        <li>397 pages</li>
-                </ul>
+    <div class="book" data-book=""><img class="" src="<%= thumbnail %>"></div>
+    <div class="buttons">
+        <a href="#"class="btn" id="deets" data-toggle="modal" data-target="#deetsModal">Look inside</a>
+        <a class="infoOpen" href="#">Info</a>
+    </div>
+    <figcaption>
+        <h2><%= title %><span><%= author %></span></h2>
+    </figcaption>
 
-                        <div class="tagsinput">
-                        <span class="tag">
-                            <span>Remove &nbsp;</span>
-                            <a class="remove-item tagsinput-remove-link"></a>
-                        </span>
-                        </div>
-        </div>
+    <div class="details">
+        <ul>
+            <li><a href="#" class="gn-icon gn-icon-article" id="deets" data-toggle="modal" data-target="#deetsModal">Look inside</a></li>
+            <li>published <%= publishedDate %></li>
+
+            <%if (pageCount != "") { %>
+            <li><%= pageCount %> pages</li>
+            <% } %>
+
+
+        </ul>
+        <span class="close-details"></span>
+    </div>
 </figure>
-</div>

@@ -1,14 +1,16 @@
 GoogleBooks.Views.Book = Backbone.View.extend({
     template : JST['books/book'],
-    className: 'col-md-3 item',
+//    className: 'col-md-3 item',
+    className: 'book-holder',
     attributes: {
         "data-book": "book-item"
     },
 
     events : {
         'click a.remove-item': 'removeItem',
-        'click a#deets': 'renderDetails'
-
+        'click #deets': 'renderDetails',
+        'click a.infoOpen' : 'showInfo',
+        'click span.close-details' : 'hideInfo'
     },
 
     initialize : function() {
@@ -22,7 +24,10 @@ GoogleBooks.Views.Book = Backbone.View.extend({
         var attr = this.model.attributes;
         $(this.el).html(this.template({
             title: attr.title,
-            thumbnail: attr.thumbnail
+            thumbnail: attr.thumbnail,
+            author: attr.author,
+            pageCount: attr.pageCount,
+            publishedDate: attr.publishedDate
         }));
         return this;
     },
@@ -38,5 +43,14 @@ GoogleBooks.Views.Book = Backbone.View.extend({
 
     removeItem: function() {
         return this.model.destroy();
+    },
+
+    showInfo: function(e) {
+        e.preventDefault();
+        classie.add( this.el.children[0], 'details-open' );  //add class to Figure
+    },
+
+    hideInfo: function() {
+        classie.remove( this.el.children[0], 'details-open' );
     }
 });

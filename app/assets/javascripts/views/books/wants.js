@@ -1,40 +1,31 @@
 GoogleBooks.Views.Wants = Backbone.View.extend({
     el : '#all-wants',
 
-   // template : JST['books/wants'],
-
     initialize : function() {
         _.bindAll(this, "render");
-        //Backbone.history.navigate('/wants/');
+        Backbone.history.navigate('/myBooks');
     },
 
     render : function() {
-        var that = this;
-        var oldCollections = this.collection;
-        $('#wantsModal').modal('show');
 
+        var that = this,
+            oldCollections = this.collection,
+            results = oldCollections.where({
+                wantToRead: true
+            }),
+            filteredCollection = new GoogleBooks.Collections.MyBooksCollection(results),
+            $myBookElements = $('#all-wants').find('.book-holder');
 
-        var results = oldCollections.where({
-            wantToRead: true
-        });
+        if (filteredCollection.length > $myBookElements.length){
 
-        var filteredCollection = new Backbone.Collection(results);
-
-        filteredCollection.each(function(item) {
-            var itemview;
-
-            //TODO -- create new view with new filtered collection
-            //now it just remakes an item view
-
-            itemview = new GoogleBooks.Views.Book({
-                model: item
+            filteredCollection.each(function(book) {
+                var bookView = new GoogleBooks.Views.Book({
+                    model: book
+                });
+                $(that.el).append(bookView.render().$el);
+                console.log(bookView);
+                return this;
             });
-
-            $(that.el).append(itemview.render().$el);
-
-            console.log(itemview);
-            return this;
-
-        });
+        }
     }
 });

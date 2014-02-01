@@ -1,11 +1,12 @@
 GoogleBooks.Views.Want = Backbone.View.extend({
-    el : '.want-list',
+
+    el : '#myBooks', //list item that controls the books in the #all-wants div
 
     template : JST['books/want'],
 
     events:{
         'click #removeAll' : 'removeAll',
-        'click #showAllWants' : 'showAllWants'
+        'click #showAllWants' : 'showMyBooks'
     },
 
     initialize : function() {
@@ -30,12 +31,20 @@ GoogleBooks.Views.Want = Backbone.View.extend({
         _.invoke(this.collection.toArray(), 'destroy');
     },
 
-    showAllWants: function(){
-        var allWantsView = new GoogleBooks.Views.Wants({
-            collection: this.collection,
-            el: '#all-wants'
+    showMyBooks: function(){
+        //TODO //fix this
+
+        var $booksFromSearch = $('.bookshelf'),
+            $myBooksView = $('#all-wants');
+
+        $booksFromSearch.fadeOut('fast');
+        $myBooksView.show();
+
+        var wantsView = new GoogleBooks.Views.Wants({
+            collection: this.collection
         });
-        console.log(allWantsView);
-        return $(this.el).find('#all-wants').append(allWantsView.render());
+
+        wantsView.render();
+//        return $(this.el).find($myBooksView).append(allWantsView.render());
     }
 });

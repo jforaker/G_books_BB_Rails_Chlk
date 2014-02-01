@@ -1,5 +1,5 @@
 GoogleBooks.Collections.TemporaryCollection = Backbone.Collection.extend({
-    url:  '/books',
+    url:  '/temps',
 
     model: GoogleBooks.Models.Book
 

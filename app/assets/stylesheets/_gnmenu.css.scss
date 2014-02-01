@@ -9,7 +9,11 @@
   }
 }
 
+/* placeholder */
 
+.gn-search::-webkit-input-placeholder {
+  color: #5f6f81 ;
+}
 
 /* Icomoon.com */
 
@@ -49,20 +53,29 @@
   }
 }
 
-.no-touch {
-  .gn-menu-main a:hover {
-    background: #5f6f81;
-    color: white;
-  }
-  .gn-menu li.gn-search-item:hover {
-    background: #5f6f81;
-    color: white;
-    a {
+
+.gn-menu-main{
+
+  A {
+    &:hover {
       background: #5f6f81;
       color: white;
     }
   }
 }
+
+.gn-menu {
+  li.gn-search-item {
+    a {
+
+      &:hover {
+        background: #5f6f81;
+        color: white;
+      }
+    }
+  }
+}
+
 
 .gn-menu-main {
   > li {
@@ -161,41 +174,24 @@ input.gn-search {
   font-weight: 300;
   font-family: 'Lato', Arial, sans-serif;
   cursor: pointer;
+
+
 }
 
-/* placeholder */
 
-.gn-search {
-  &::-webkit-input-placeholder, &:-moz-placeholder, &::-moz-placeholder, &:-ms-input-placeholder {
-    color: #5f6f81;
-  }
-  &:focus::-webkit-input-placeholder {
-    color: transparent;
-  }
-}
 
-/* hide placeholder when active in Chrome */
-
-.no-touch .gn-menu li.gn-search-item:hover .gn-search:focus::-webkit-input-placeholder {
-  color: transparent;
-}
 
 input.gn-search:focus {
   cursor: text;
 }
 
-.no-touch .gn-menu li.gn-search-item:hover {
-  input.gn-search {
-    color: white;
-  }
-  .gn-search {
-    &::-webkit-input-placeholder, &:-moz-placeholder, &::-moz-placeholder, &:-ms-input-placeholder {
-      color: white;
-    }
-  }
+
+
+
+input.gn-search:focus {
+  cursor: text;
 }
 
-/* placeholder */
 
 .gn-menu-main a.gn-icon-search {
   position: absolute;
@@ -238,14 +234,6 @@ input.gn-search:focus {
   content: "\e007";
 }
 
-.gn-icon-photoshop::before {
-  content: "\e001";
-}
-
-.gn-icon-illustrator::before {
-  content: "\e002";
-}
-
 .gn-icon-archive::before {
   content: "\e00d";
 }
@@ -280,13 +268,20 @@ input.gn-search:focus {
   box-shadow: 0 3px white, 0 -6px #5f6f81, 0 -9px white, 0 -12px #5f6f81;
   content: '';
 }
-
-.no-touch .gn-icon-menu {
-  &:hover::before, &.gn-selected:hover::before {
-    background: white;
-    box-shadow: 0 3px #5f6f81, 0 -6px white, 0 -9px #5f6f81, 0 -12px white;
-  }
+.gn-menu-main a:hover, .gn-menu li.gn-search-item:hover, .gn-menu li.gn-search-item:hover a {
+  background: #5f6f81;
+  color: white;
 }
+.gn-menu li.gn-search-item:hover input.gn-search {
+  color: white ;
+}
+
+.gn-icon-menu:hover::before,
+.gn-icon-menu.gn-selected:hover::before {
+  background: white;
+  box-shadow: 0 3px #5f6f81, 0 -6px white, 0 -9px #5f6f81, 0 -12px white;
+}
+
 
 .gn-icon-menu.gn-selected::before {
   background: #5993cd;

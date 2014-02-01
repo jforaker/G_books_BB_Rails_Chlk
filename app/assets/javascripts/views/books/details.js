@@ -23,7 +23,6 @@ GoogleBooks.Views.Details = Backbone.View.extend({
             readerLink: attr.readerLink
         }));
 
-
         loadBook(id);
 
         function loadBook(id) {
@@ -41,10 +40,12 @@ GoogleBooks.Views.Details = Backbone.View.extend({
             showCanvas(true);
             showStatus('');
         }
+
         function showCanvas(showing) {
             var canvasDiv = document.getElementById('viewerCanvas');
             canvasDiv.style.display =  (showing) ? 'block' : 'none';
         }
+
         function showStatus(string) {
             var statusDiv = document.getElementById('viewerStatus');
             var showing = !(string == null || string.length == 0);

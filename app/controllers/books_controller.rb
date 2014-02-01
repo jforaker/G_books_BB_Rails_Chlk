@@ -42,7 +42,7 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    item_params = params.require(:book).permit( :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink )
+    item_params = params.require(:book).permit( :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink, :author, :pageCount, :publishedDate)
     #:volumeInfo => [:title]
     @item = Book.new(item_params)
 
@@ -60,7 +60,12 @@ class BooksController < ApplicationController
   # PUT /books/1
   # PUT /books/1.json
   def update
-    item_params = params.require(:book).permit(wantToRead: params[:item][:wantToRead], readerLink: params[:item][:readerLink])
+    item_params = params.require(:book).permit(wantToRead: params[:item][:wantToRead],
+                                               readerLink: params[:item][:readerLink],
+                                               author: params[:item][:author],
+                                               pageCount: params[:item][:pageCount] || '',
+                                               publishedDate: params[:item][:publishedDate]
+    )
     @item = Book.find(params[:id])
     respond_to do |format|
       if @item.update_attributes(item_params)
