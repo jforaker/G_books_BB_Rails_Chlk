@@ -18,6 +18,8 @@ gem 'responders'
 gem 'bootstrap-sass'
 gem 'jquery-ui-rails'
 gem 'font-awesome-sass'
+gem "httparty", "~> 0.12.0"
+gem "rest-client", "~> 1.6.7"
 
 
 group :development do

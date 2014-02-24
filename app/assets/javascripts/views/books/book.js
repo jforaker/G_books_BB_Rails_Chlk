@@ -1,6 +1,5 @@
 GoogleBooks.Views.Book = Backbone.View.extend({
     template : JST['books/book'],
-//    className: 'col-md-3 item',
     className: 'book-holder',
     attributes: {
         "data-book": "book-item"
@@ -14,7 +13,6 @@ GoogleBooks.Views.Book = Backbone.View.extend({
     },
 
     initialize : function() {
-        // _.bindAll(this, "render");
         this.listenTo(this.model, 'change', this.render);
         return this.listenTo(this.model, 'destroy', this.remove);
     },

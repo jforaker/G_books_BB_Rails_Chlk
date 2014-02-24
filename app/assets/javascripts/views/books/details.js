@@ -5,18 +5,21 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
     events: {
         "click .close" : 'pushstateClick',
+        "click #closer": 'closeMe',
+        "click .modal-backdrop" : "hideModaler",
         "click #want-button" : 'wantClick'
     },
 
     initialize : function() {
         _.bindAll(this, "render");
-        //Backbone.history.navigate('/details/' + this.model.attributes.id);
+        Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
     },
 
-    render:function (eventName) {
+    render:function () {
 
         var attr = this.model.attributes,
             id = attr.readerLink;
+
         $(this.el).html(this.template({
             title: attr.title,
             thumbnail: attr.thumbnail,
@@ -62,11 +65,23 @@ GoogleBooks.Views.Details = Backbone.View.extend({
     pushstateClick: function(event){
         event.preventDefault();
         $('.modal-backdrop').hide();
-        Backbone.history.navigate('/' , {trigger: true, replace: true});
+        Backbone.history.navigate('/home' , {trigger: true, replace: true});
     },
 
-    wantClick: function(event){
-        event.preventDefault();
+    closeMe: function(e){
+
+       this.pushstateClick(e);
+    },
+
+
+    hideModaler: function(e){
+
+        this.pushstateClick(e);
+    },
+
+
+        wantClick: function(e){
+        e.preventDefault();
         $('.modal-backdrop').hide();
         $('#deetsModal').modal('hide');
 

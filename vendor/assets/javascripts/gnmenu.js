@@ -19,7 +19,7 @@
         return check;
     }
 
-    function gnMenu( el, options ) {
+    function gnMenu( el ) {
         this.el = el;
         this._init();
     }

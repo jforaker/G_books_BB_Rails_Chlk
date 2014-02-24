@@ -14,6 +14,7 @@ GoogleBooks.Views.Want = Backbone.View.extend({
     },
 
     render : function() {
+
         var wants = this.collection,
             wantsArr = [],
             getWants = wants.where({ wantToRead: true });
@@ -24,6 +25,7 @@ GoogleBooks.Views.Want = Backbone.View.extend({
         $(this.el).html(this.template({
             wantToRead: totalWants
         }));
+
         return this;
     },
 
@@ -32,7 +34,7 @@ GoogleBooks.Views.Want = Backbone.View.extend({
     },
 
     showMyBooks: function(){
-        //TODO //fix this
+        //TODO fix this
 
         var $booksFromSearch = $('.bookshelf'),
             $myBooksView = $('#all-wants');
@@ -45,6 +47,5 @@ GoogleBooks.Views.Want = Backbone.View.extend({
         });
 
         wantsView.render();
-//        return $(this.el).find($myBooksView).append(allWantsView.render());
     }
 });

@@ -215,7 +215,7 @@
 
 /* Details background */
 
-.bookshelf figure {
+.bookshelf figure, #all-wants figure {
   &::before {
     position: absolute;
     top: 0;

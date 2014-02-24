@@ -13,8 +13,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $('#deetsModal').remove();
-
-
     },
 
     render : function() {
@@ -25,19 +23,16 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             collection: this.collection
         });
         menuView.render();
-
 //        var countView = new GoogleBooks.Views.Count({
 //            collection: this.collection
 //        });
 //        countView.render();
-
         var wantView = new GoogleBooks.Views.Want({
             collection: this.collection
         });
 
         wantView.render();
 
-        //TODO -- check that this renders the wants to the all-wants div
 
         //itemsCollection
         this.collection.each(function(bookModel) {
@@ -51,7 +46,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
         });
 
-        new gnMenu( document.getElementById( 'gn-menu' ), null );
+        new gnMenu( document.getElementById( 'gn-menu' ) );
 
     },
 
@@ -160,9 +155,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
         aj = this.doAjax(url, data);
 
-        //jQuery promise object tells us when ajax is done
         aj.done(function () {
-            //var Books = new GoogleBooks.Collections.TemporaryCollection(),
 
             var Books = that.collection,
                 data = aj.responseJSON,
@@ -205,8 +198,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                 });
             }
             $(spinner).hide();
-            //Remove old ajax data
-            delete aj;
         });
     },
 

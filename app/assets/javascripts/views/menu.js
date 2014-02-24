@@ -9,11 +9,10 @@ GoogleBooks.Views.Menu = Backbone.View.extend({
     },
 
     render: function(){
-        var remaining = this.collection.length;
+        var name = CHLK_USER.name;
         var compiledHTML= $(this.template({
-            remaining: remaining
+            name: name
         }));
-        $('#menu').append(compiledHTML);
-
+        $('#namer').append(compiledHTML);
     }
 });

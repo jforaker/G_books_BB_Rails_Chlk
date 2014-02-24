@@ -5,7 +5,7 @@ window.GoogleBooks = {
     Routers: {},
     initialize: function() {
 
-        app = new GoogleBooks.Routers.Items({});
+        app = new GoogleBooks.Routers.AppRouter({});
         Backbone.history.start({pushstate: true});
 
         $(document).on("click", "a:not([data-bypass])", function(evt) {
@@ -28,6 +28,8 @@ window.GoogleBooks = {
                 Backbone.history.navigate(href.attr, true);
             }
         });
+
+
     }
 };
 
