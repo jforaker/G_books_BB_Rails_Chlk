@@ -1,18 +1,15 @@
 GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
     template: JST['books/index'],
-    el: "#app",
+    el: "#container",
     events : {
-        'keypress #add-item': 'createOnEnter',
-        "keyup": "searchAutocomplete"
+        'keypress #add-item': 'createOnEnter'
+       // 'keyup': 'searchAutocomplete'
     },
 
     initialize : function() {
         this.listenTo(this.collection, 'reset', this.render);
         return this.listenTo(this.collection, 'add', this.addBook);
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $('#deetsModal').remove();
     },
 
     render : function() {
@@ -20,34 +17,40 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         $(this.el).html(this.template());
 
         var menuView = new GoogleBooks.Views.Menu({
-            collection: this.collection
-        });
-        menuView.render();
-//        var countView = new GoogleBooks.Views.Count({
-//            collection: this.collection
-//        });
-//        countView.render();
-        var wantView = new GoogleBooks.Views.Want({
-            collection: this.collection
-        });
+                collection: this.collection
+            }),
+            wantView = new GoogleBooks.Views.Want({
+                collection: this.collection
+            });
 
+        menuView.render();
         wantView.render();
 
-
-        //itemsCollection
-        this.collection.each(function(bookModel) {
-            var bookView = new GoogleBooks.Views.Book({
-                model: bookModel
+        var initPlugins = function(){
+            $('.title').dotdotdot({
+                watch:      true,
+                ellipsis	: '... ',
+                height		: 120
             });
-            var renderBook = bookView.render().el;
-            this.$('#all-wants').append(renderBook);
 
-            return this;
+            new GNMenu( document.getElementById( 'gn-menu' ));
+        };
 
-        });
-
-        new gnMenu( document.getElementById( 'gn-menu' ) );
-
+        if(this.collection.length > 0){
+            //itemsCollection
+            this.collection.each(function(bookModel) {
+                var bookView = new GoogleBooks.Views.Book({
+                    model: bookModel
+                });
+                var renderBook = bookView.render().el;
+                this.$('#all-wants').append(renderBook);
+                initPlugins();
+                return this;
+            });
+        } else {
+            initPlugins();
+            $('.bookshelf > .row').html('search for a book!')
+        }
     },
 
     searchAutocomplete: function( e ) {
@@ -55,7 +58,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         $(function(){
             var $searchForm = $('#add-item'),
                 term = $searchForm.val(),
-                self = this,
                 url = 'https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(term)+'&filter=free-ebooks&maxResults=8&key='+that.vars().API_KEY;
             $($searchForm).autocomplete({
                 minLength: 3,
@@ -66,9 +68,11 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
                             var subtitle = typeof item.volumeInfo.subtitle !== "undefined" ? ': '+item.volumeInfo.subtitle : '',
                                 thumb = typeof item.volumeInfo.imageLinks !== "undefined" ? item.volumeInfo.imageLinks.thumbnail : '',
+                                id = item.id,
                                 ele = item.volumeInfo.title.concat(subtitle);
 
                             dropdown.push({
+                                id: id,
                                 label: ele,
                                 img: thumb
                             });
@@ -77,14 +81,21 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                     });
                 },
                 select: function( event, ui ) {
-                    //populate the autocomplete with an API query
-                    that.queryApi(ui.item.value, index='0',12);
+                    console.log(arguments);
+                    that.queryApi(ui.item.value, index='0', 12);
+
+//                    var id = ui.id;
+//                    var detailsView = new GoogleBooks.Views.Details({
+//                            //model: ui.item
+//                        });
+//                    console.log(detailsView);
+//                    return $('body').find("#details").html(detailsView.renderModal(id));
                 },
                 close: function( event, ui ) {
                     $searchForm.val('');
-                    window.location.hash = '';
                 }
             }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                console.log(item)
                 return $( "<li>" )
                     .data( "ui-autocomplete-item", item )
                     .append( "<div class='description'><a>" + item.label + "</a></div><img class='image' src=" + item.img + ">" )
@@ -102,7 +113,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         return this.$('#add-item').val('');
     },
 
-
     vars: function(){
         return data = {
             API_KEY: 'AIzaSyCHOnYhOr4Bo0pb0DqM_qUBjFShowf2-dw',
@@ -112,20 +122,13 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
     },
 
     search: function(e, query){
-        Backbone.history.navigate('/search');
-
+         Backbone.history.navigate('/search');
         e.preventDefault();
-
         $('.bookshelf').fadeIn();
+       // $('.gn-menu-wrapper').removeClass('gn-open-all');
 
-        var $myBooksView = $('#all-wants');
 
-        if ($myBooksView.is(':visible')) {
-            $myBooksView.fadeOut('fast');
-        }
-
-        this.queryApi(query, index='0', this.vars().MAX_DEFAULT);
-
+        this.queryApi(query, 0, this.vars().MAX_DEFAULT);
     },
 
     doAjax: function (url, data) {
@@ -138,44 +141,34 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
     },
 
     queryApi: function(term, index, maxResults) {
+        var bookRow = $('.bookshelf');
+        var spinner = $('<div class="spinner"></div>') ;
         var that = this;
         var aj,
-            self = this,
-            $books = $('#books'),
             url = 'https://www.googleapis.com/books/v1/volumes?',
             data = 'q='+encodeURIComponent(term)
                 +'&startIndex='+index+'&maxResults='+maxResults
+                +'&orderBy=newest'
                 +'&filter=free-ebooks&key='
                 +this.vars().API_KEY+'&projection=full';
 
-        //Show loading indicator
-        var spinner = '<div class="spinner"></div>' ;
-        $('#app').append(spinner);
+        bookRow.find('.book-holder').attr('data-something', 'from-search').fadeOut('slow').delay(999).remove();
+        bookRow.append(spinner);
         $(spinner).show();
 
         aj = this.doAjax(url, data);
 
-        aj.done(function () {
+        aj.done(function(){
+
 
             var Books = that.collection,
                 data = aj.responseJSON,
                 emptyBooks = 0;
 
-            //Traverse the API response and put each JSON book into a model
             if (data) {
 
-                //If API quota runs out
-                //give a message
-                data.error = data.error || {};
-                data.error.message = data.error.message || {};
-                if (data.error.message === 'Daily Limit Exceeded') {
-                    _.once(self.deadApi(data.error.message));
-                }
-
                 _.each(data.items, function(item) {
-
                     //MUST have thumbnail and be embeddable in reader
-
                     if (typeof item.volumeInfo.imageLinks !== "undefined" && item.accessInfo.embeddable == true) {
 
                         var itemInfo = {
@@ -190,8 +183,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
                         var book = new GoogleBooks.Models.Book(itemInfo);
                         Books.add(book);
-
-                        console.log(book);
                     } else {
                         emptyBooks++;
                     }
@@ -207,7 +198,9 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         });
         var bookEl = bookView.render().el ;
         $(bookEl).attr("data-something", "from-search");
-        this.$('.row').append(bookEl);
+        $('.bookshelf').append(bookEl);
+        $('ui-autocomplete').hide();
+
         return this;
     }
 });

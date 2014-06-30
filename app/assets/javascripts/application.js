@@ -14,11 +14,16 @@
 //= require modernizr
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
+//= require jsapi
 //= require underscore
 //= require backbone
 //= require bootstrap
 //= require classie
 //= require gnmenu
+//= require dotdotdot
+//= require masonry
+//= require handlebars
+
 //
 //= require g_books
 //= require_tree ../templates
@@ -27,3 +32,4 @@
 //= require_tree ./views
 //= require_tree ./routers
 //= require_tree ../templates/
+

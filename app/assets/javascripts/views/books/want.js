@@ -1,9 +1,6 @@
 GoogleBooks.Views.Want = Backbone.View.extend({
-
     el : '#myBooks', //list item that controls the books in the #all-wants div
-
     template : JST['books/want'],
-
     events:{
         'click #removeAll' : 'removeAll',
         'click #showAllWants' : 'showMyBooks'
@@ -14,7 +11,6 @@ GoogleBooks.Views.Want = Backbone.View.extend({
     },
 
     render : function() {
-
         var wants = this.collection,
             wantsArr = [],
             getWants = wants.where({ wantToRead: true });
@@ -34,18 +30,18 @@ GoogleBooks.Views.Want = Backbone.View.extend({
     },
 
     showMyBooks: function(){
-        //TODO fix this
 
-        var $booksFromSearch = $('.bookshelf'),
+        var $booksFromSearch = $('.book-holder'),
             $myBooksView = $('#all-wants');
 
-        $booksFromSearch.fadeOut('fast');
-        $myBooksView.show();
+       $booksFromSearch.fadeOut('fast');
+       $myBooksView.show();
 
         var wantsView = new GoogleBooks.Views.Wants({
             collection: this.collection
         });
 
-        wantsView.render();
+        $booksFromSearch.append(wantsView.render())
+//        $booksFromSearch.append(wantsView.render());
     }
 });

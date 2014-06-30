@@ -19,12 +19,13 @@
         return check;
     }
 
-    function gnMenu( el ) {
+    function GNMenu( el ) {
         this.el = el;
+        //this._openMenu();
         this._init();
     }
 
-    gnMenu.prototype = {
+    GNMenu.prototype = {
         _init : function() {
             this.trigger = this.el.querySelector( 'a.gn-icon-menu' );
             this.menu = this.el.querySelector( 'nav.gn-menu-wrapper' );
@@ -35,6 +36,7 @@
             var self = this;
             this.bodyClickFn = function() {
                 self._closeMenu();
+
                 this.removeEventListener( self.eventtype, self.bodyClickFn );
             };
         },
@@ -55,6 +57,7 @@
                 ev.preventDefault();
                 if( self.isMenuOpen ) {
                     self._closeMenu();
+
                     document.removeEventListener( self.eventtype, self.bodyClickFn );
                 }
                 else {
@@ -62,13 +65,16 @@
                     document.addEventListener( self.eventtype, self.bodyClickFn );
                 }
             } );
+            classie.add( self.menu, 'gn-open-part' );
+
             this.menu.addEventListener( this.eventtype, function(ev) { ev.stopPropagation(); } );
         },
         _openIconMenu : function() {
             classie.add( this.menu, 'gn-open-part' );
+
         },
         _closeIconMenu : function() {
-            classie.remove( this.menu, 'gn-open-part' );
+           // classie.remove( this.menu, 'gn-open-part' );
         },
         _openMenu : function() {
             if( this.isMenuOpen ) return;
@@ -76,6 +82,11 @@
             this.isMenuOpen = true;
             classie.add( this.menu, 'gn-open-all' );
             this._closeIconMenu();
+
+
+//            var w = $(this.menu).width();
+//            var cont =  $('#container');
+//            cont.css('width', cont.width() - w*2)
         },
         _closeMenu : function() {
             if( !this.isMenuOpen ) return;
@@ -83,10 +94,20 @@
             this.isMenuOpen = false;
             classie.remove( this.menu, 'gn-open-all' );
             this._closeIconMenu();
+
+            var w = $(this.menu).width();
+//            var cont =  $('#container');
+//            console.log(cont.width())
+//
+//            cont.css('width', cont.width() + w)
+//
+//            var count = 0;
+//            count++
+//            console.info(count)
         }
     };
 
     // add to global namespace
-    window.gnMenu = gnMenu;
+    window.GNMenu = GNMenu;
 
 } )( window );

@@ -3,43 +3,48 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     routes: {
         "": "_setDefault",
         "home": "_setDefault",
-        "details/*":"itemDetails",
-        "getMyBooks": "getMyBooks",
-        "search" : "search"
+        //"details/:id":"itemDetails",
+        "myBooks": "getMyBooks",
+        "search" : "search",
+        "topics" : "topics"
     },
 
     _setDefault: function() {
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
-        $('#deetsModal').remove();
         console.log("[setDefault]");
         //Backbone.history.navigate('home');
+
+        CHLK_USER = {};
+
+
+        $.ajax({
+            url: '/books.json',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                CHLK_USER.name = data.user;
+            }
+        });
+
         this.index();
     },
 
     index: function() {
         console.log('Router > index');
-        CHLK_USER = {};
 
-        $.ajax({
-            url: '/index.json',
-            dataType: 'json',
-            success: function (data) {
-                CHLK_USER.name = data.user;
-                console.log(CHLK_USER);
-            }
-        });
 
         var items = new GoogleBooks.Collections.Items();
         new GoogleBooks.Views.ItemsIndex({
             collection: items
         });
         items.fetch({reset: true});
+
     },
 
     getMyBooks: function(){
-        var myBooksView = new GoogleBooks.Views.Want();
-        myBooksView.showMyBooks();
+        var myBooksView = new GoogleBooks.Views.Wants();
+        myBooksView.render();
     },
 
     removeAll: function(){
@@ -47,12 +52,21 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     },
 
     search: function(){
-        var indexView = new GoogleBooks.Views.ItemsIndex().initialize();
-        indexView.render();
+        var items = new GoogleBooks.Collections.Items();
+        new GoogleBooks.Views.ItemsIndex({
+            collection: items
+        });
+        items.fetch({reset: true});
+
     },
 
     itemDetails:function (id) {
         console.log('item deets');
+    },
+
+    topics: function(){
+        var topicsView = new GoogleBooks.Views.Topics();
+        topicsView.render();
     }
 
 });

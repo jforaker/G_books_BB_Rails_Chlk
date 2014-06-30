@@ -1,5 +1,6 @@
 GoogleBooks.Views.Book = Backbone.View.extend({
-    template : JST['books/book'],
+
+    template : JST['books/gbook'],
     className: 'book-holder',
     attributes: {
         "data-book": "book-item"
@@ -7,7 +8,7 @@ GoogleBooks.Views.Book = Backbone.View.extend({
 
     events : {
         'click a.remove-item': 'removeItem',
-        'click #deets': 'renderDetails',
+        'click .deets': 'renderDetails',
         'click a.infoOpen' : 'showInfo',
         'click span.close-details' : 'hideInfo'
     },
@@ -27,16 +28,20 @@ GoogleBooks.Views.Book = Backbone.View.extend({
             pageCount: attr.pageCount,
             publishedDate: attr.publishedDate
         }));
+
         return this;
     },
 
-    renderDetails: function(){
+    renderDetails: function(e){
+        e.preventDefault();
         var that = this,
         detailsView = new GoogleBooks.Views.Details({
             model: that.model
         });
         console.log(detailsView);
-        return $(this.el).find("#details").append(detailsView.render().el);
+        return  $('body').find("#details").append(detailsView.render().el);
+
+
     },
 
     removeItem: function() {

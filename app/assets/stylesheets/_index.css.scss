@@ -90,6 +90,7 @@ section {
 
 
 .ui-autocomplete{
+  z-index: 99999999;
   width: 340px !important;
   border: none !important;
   border-radius: 0px;
@@ -137,11 +138,14 @@ DIV.description {
 
 
 .spinner {
-  display: none;
+  //display: none;
   width: 30px;
   height: 30px;
-  background-color: #333;
-  margin: 100px auto;
+  background-color: rgba(187, 123, 84, 0.65);
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  z-index: 9999;
   -webkit-animation: rotateplane 1.2s infinite ease-in-out;
   animation: rotateplane 1.2s infinite ease-in-out;
 }

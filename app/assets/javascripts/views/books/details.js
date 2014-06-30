@@ -1,91 +1,88 @@
 GoogleBooks.Views.Details = Backbone.View.extend({
     el : '#details',
-
-    template : JST['books/details'],
-
+    template : JST['books/deets'],
     events: {
         "click .close" : 'pushstateClick',
         "click #closer": 'closeMe',
-        "click .modal-backdrop" : "hideModaler",
+        "click .window-overlay" : "hideModaler",
         "click #want-button" : 'wantClick'
     },
 
     initialize : function() {
-        _.bindAll(this, "render");
+        _.bindAll(this, "render", "showModal", "showBook", "renderModal");
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
     },
 
     render:function () {
 
+        var that = this;
         var attr = this.model.attributes,
             id = attr.readerLink;
-
         $(this.el).html(this.template({
             title: attr.title,
             thumbnail: attr.thumbnail,
             readerLink: attr.readerLink
         }));
-
-        loadBook(id);
-
-        function loadBook(id) {
-            // Load the Embedded Viewer API, calling showBook when it's ready
-            var callbackFn = function() { showBook(id); };
-            google.load("books", "0", { "callback" : callbackFn });
-        }
-
-        function showBook(id) {
-            // We have the book ID, API is loaded, now just show it
-            var canvas = document.getElementById('viewerCanvas');
-            viewer = new google.books.DefaultViewer(canvas);
-            viewer.load(id);
-
-            showCanvas(true);
-            showStatus('');
-        }
-
-        function showCanvas(showing) {
-            var canvasDiv = document.getElementById('viewerCanvas');
-            canvasDiv.style.display =  (showing) ? 'block' : 'none';
-        }
-
-        function showStatus(string) {
-            var statusDiv = document.getElementById('viewerStatus');
-            var showing = !(string == null || string.length == 0);
-            if (statusDiv.firstChild) {
-                statusDiv.removeChild(statusDiv.firstChild);
-            }
-            statusDiv.appendChild(document.createTextNode((showing) ? string : ''));
-            statusDiv.style.display =  (showing) ? 'block' : 'none';
-        }
-
+        that.showModal(id);
         return this;
+    },
+
+    renderModal: function(ids){
+        $(this.el).html(this.template());
+        this.showModal(id);
+    },
+
+
+    showModal: function(ids){
+        var that = this;
+        // Load the Embedded Viewer API, calling showBook when it's ready
+        function callbackFn() {
+            var id = ids;
+
+            $('.window-overlay').fadeIn("fast");
+            //that.showBook(id);
+            var canvas = document.getElementById('viewer');
+            var viewer = new google.books.DefaultViewer(document.getElementById('viewer'));
+            var canvasDiv = $('#viewer');
+
+            console.log(canvas);
+            viewer.load(id);
+            canvasDiv.fadeIn("fast");
+        }
+
+        google.load("books", "0", { "callback" : callbackFn });
+//        google.setOnLoadCallback(callbackFn(id));
+
+    },
+
+    showBook: function(id){
+
+
+
+
+
+
+
     },
 
     pushstateClick: function(event){
         event.preventDefault();
-        $('.modal-backdrop').hide();
-        Backbone.history.navigate('/home' , {trigger: true, replace: true});
+        $('.window-overlay').hide();
+        Backbone.history.navigate('');
     },
 
     closeMe: function(e){
-
-       this.pushstateClick(e);
-    },
-
-
-    hideModaler: function(e){
-
         this.pushstateClick(e);
     },
 
+    hideModaler: function(e){
+        this.pushstateClick(e);
+    },
 
-        wantClick: function(e){
+    wantClick: function(e){
         e.preventDefault();
-        $('.modal-backdrop').hide();
-        $('#deetsModal').modal('hide');
+        $('.window-overlay').hide();
 
-        // the old way--
         var model = this.model;
         model.set({
             wantToRead: true,
@@ -94,5 +91,4 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         model.save();
         console.log(model);
     }
-
 });

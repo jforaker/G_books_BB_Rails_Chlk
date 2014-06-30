@@ -1,0 +1,21 @@
+.window-overlay {
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 20;
+
+  #viewer{
+    width: 733px;
+    z-index: 25;
+    /* left: 455px; */
+    top: 10%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+  }
+}

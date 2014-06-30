@@ -5,7 +5,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
-gem 'turbolinks'
+#gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'compass-rails', '~> 1.1.2'
 gem 'figaro'
@@ -20,6 +20,7 @@ gem 'jquery-ui-rails'
 gem 'font-awesome-sass'
 gem "httparty", "~> 0.12.0"
 gem "rest-client", "~> 1.6.7"
+gem 'handlebars_assets'
 
 
 group :development do

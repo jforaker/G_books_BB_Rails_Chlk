@@ -1,14 +1,29 @@
-
-
-.bookshelf, #all-wants{
-  width: 79%;
+#all-wants{
+  width: 90%;
+  margin: 0 auto;
   position: relative;
-  margin: 15px 325px;
   list-style: none;
   text-align: center;
   figure {
     position: relative;
-    display: inline-block;
+    //display: inline-block;
+    margin: 40px 0 0 0;
+    padding: 45px 0;
+    max-width: 75%;
+    width: 324px;
+    vertical-align: top;
+  }
+}
+
+.bookshelf {
+  width: 95%;
+  position: relative;
+  margin: 0 auto;
+  list-style: none;
+  text-align: center;
+  figure {
+    position: relative;
+    display: block;
     margin: 40px 0 0 0;
     padding: 45px 0;
     max-width: 75%;

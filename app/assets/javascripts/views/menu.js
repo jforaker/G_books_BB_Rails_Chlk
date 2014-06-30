@@ -1,7 +1,5 @@
 GoogleBooks.Views.Menu = Backbone.View.extend({
-
-    el: '.sidr-inner',
-
+    el: '#gn-menu',
     template : JST['menu'],
 
     initialize: function(){
@@ -9,10 +7,12 @@ GoogleBooks.Views.Menu = Backbone.View.extend({
     },
 
     render: function(){
-        var name = CHLK_USER.name;
+        //todo - use user model
+
+        var name = typeof CHLK_USER != 'undefined' ? CHLK_USER.name : 'there';
         var compiledHTML= $(this.template({
             name: name
         }));
-        $('#namer').append(compiledHTML);
+        $('#namer').html(compiledHTML);
     }
 });
