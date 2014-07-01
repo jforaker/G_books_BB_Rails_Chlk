@@ -6,7 +6,6 @@ class BooksController < ApplicationController
   respond_to :html, :xml, :json
 
   def index
-    puts current_user.user_id
     @current_user ||= session[:user_id] && User.find_by_user_id(session[:user_id])
 
     @items = @current_user.books
