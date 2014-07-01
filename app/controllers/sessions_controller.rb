@@ -92,11 +92,11 @@ class SessionsController < ApplicationController
   # Get the access token
   def get_access_token(code_url_param)
 
-    unless session[:acs_token].nil?
-      if session[:acs_token][:code] == code_url_param
-        return :res => JSON.parse(session[:acs_token][:token]), :error => false
-      end
-    end
+    #unless session[:acs_token].nil?
+    #  if session[:acs_token][:code] == code_url_param
+    #    return :res => JSON.parse(session[:acs_token][:token]), :error => false
+    #  end
+    #end
 
     begin
       options =   { :body => {
