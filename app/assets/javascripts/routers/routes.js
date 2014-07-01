@@ -30,17 +30,17 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
         switch (mode){
             case  "myview":
                 console.log('my view ===');
-                CHLK_MODE = null
+                CHLK_MODE = null;
                 break;
             case "edit":
                 console.info('edit =====');
                 console.info(CHLK_ANN_ID);
-                CHLK_MODE = true
+                CHLK_MODE = true;
 
                 break;
             case "gradingview":
                 console.info('grading view ======');
-                CHLK_MODE = null
+                CHLK_MODE = null;
 
                 $.ajax({
                     url: '/announcements/' + CHLK_ANN_ID + '.json',
@@ -54,10 +54,10 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                         that.showAttached(g_books_id)
                     }
                 });
-
                 break;
+
             case "view":
-                console.info('grading view ======');
+                console.info('view ======');
                 CHLK_MODE = "view";
                 break;
 
@@ -80,13 +80,25 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
 
     showAttached: function(id){
 
-        console.info('IDD ====' + id);
-        var item = new GoogleBooks.Views.AttachedBook({
-            model: new Backbone.Model({
-                id: id
-            })
-        });
-        item.render(id).$el;
+//        console.info('IDD ====' + id);
+//        var item = new GoogleBooks.Views.AttachedBook({
+//            model: new Backbone.Model({
+//                id: id
+//            })
+//        });
+//        item.initialize();
+//        item.render(id);
+
+        var that = this,
+            detailsView = new GoogleBooks.Views.Details({
+                model: new Backbone.Model({
+                    id: id
+                })
+            });
+        console.log(detailsView);
+        detailsView.initialize();
+
+        return  detailsView.render(id);
     },
 
 

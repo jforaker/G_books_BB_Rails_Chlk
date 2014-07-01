@@ -10,7 +10,6 @@ GoogleBooks.Views.Wants = Backbone.View.extend({
 
     render : function() {
 
-
         console.log('WANTSS')
         var that = this,
             oldCollections = this.collection,
@@ -20,26 +19,24 @@ GoogleBooks.Views.Wants = Backbone.View.extend({
             filteredCollection = new GoogleBooks.Collections.MyBooksCollection(results),
             $myBookElements = $('#all-wants').find('.book-holder');
 
-        filteredCollection.each(function(book) {
-            var bookView = new GoogleBooks.Views.Book({
-                model: book
-            });
-            $(that.el).append(bookView.render().el);
-            console.log(bookView);
-            return this;
-        });
+        console.log(filteredCollection.length);
 
-//        if (filteredCollection.length > $myBookElements.length){
-//
-//            filteredCollection.each(function(book) {
-//                var bookView = new GoogleBooks.Views.Book({
-//                    model: book
-//                });
-//                $(that.el).append(bookView.render().$el);
-//                console.log(bookView);
-//                return this;
-//            });
-//        }
+        if (filteredCollection.length == 0 ){
+            $(that.$el.html(''));
+            var row = $('<div class="rowerg"></div> ');
+            $(that.$el.append(row));
+            row.html("No books in your Library. Search for a book and add it!");
+        } else {
+            filteredCollection.each(function(book) {
+                var bookView = new GoogleBooks.Views.Book({
+                    model: book
+                });
+                $(that.el).append(bookView.render().el);
+                console.log(bookView);
+                return this;
+            });
+        }
+
     }
 
 });

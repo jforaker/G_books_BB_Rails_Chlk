@@ -16,16 +16,16 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
     },
 
-    render:function () {
+    render:function (i) {
         var that = this;
         var attr = this.model.attributes,
             id = attr.readerLink;
         $(this.el).html(this.template({
-            title: attr.title,
-            thumbnail: attr.thumbnail,
-            readerLink: attr.readerLink
+            title: attr.title || '',
+            thumbnail: attr.thumbnail || '',
+            readerLink: attr.readerLink  || ''
         }));
-        that.showModal(id);
+        that.showModal(typeof id == 'undefined' ? i : id);
         return this;
     },
 

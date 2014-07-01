@@ -14,14 +14,16 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
     render : function() {
 
-        $(this.el).html(this.template());
+        var that = this;
+
+        $(that.el).html(that.template());
 
         var menuView = new GoogleBooks.Views.Menu({
-                collection: this.collection
-            }),
-            wantView = new GoogleBooks.Views.Want({
-                collection: this.collection
-            });
+            collection: this.collection
+        });
+        var wantView = new GoogleBooks.Views.Want({
+            collection: this.collection
+        });
 
         menuView.render();
         wantView.render();
@@ -45,11 +47,15 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                 var renderBook = bookView.render().el;
                 this.$('#all-wants').append(renderBook);
                 initPlugins();
+
                 return this;
             });
         } else {
             initPlugins();
-            $('.bookshelf').html('search for a book!')
+            var row = $('<div class="rowerg"></div> ');
+            $(that.$el.find('.bookshelf').append(row));
+            row.html("Welcome to Google Books Reader. Search for a book and add it to your library.");
+
         }
     },
 
@@ -125,7 +131,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
          Backbone.history.navigate('/search');
         e.preventDefault();
         $('.bookshelf').fadeIn();
-       // $('.gn-menu-wrapper').removeClass('gn-open-all');
+        //$('.gn-menu-wrapper').removeClass('gn-open-all');
 
 
         this.queryApi(query, 0, this.vars().MAX_DEFAULT);
@@ -153,6 +159,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                 +this.vars().API_KEY+'&projection=full';
 
         bookRow.find('.book-holder').attr('data-something', 'from-search').fadeOut('slow').delay(999).remove();
+        bookRow.find('.rowerg').fadeOut('slow');
         bookRow.append(spinner);
         $(spinner).show();
 
