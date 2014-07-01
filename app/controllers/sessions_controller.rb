@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 
   respond_to  :json
 
-  def create(e, u_id, name)
+  def create(e, u_id, name, role)
     #@user = User.authenticate(e, u_id)
     #
     #if @user
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
     @user = User.where(:email => e).first_or_create do |user|
       # This block is called with a new user object with only :email set
       # Customize this object to your will
-      user.attributes = {:email => e, :user_id => u_id, :name => name}
+      user.attributes = {:email => e, :user_id => u_id, :name => name, :role => role}
       # After this, first_or_create will call user.create, so you don't have to
 
       redirect_to '/books'
@@ -89,7 +89,6 @@ class SessionsController < ApplicationController
   end
 
 
-
   # Get the access token
   def get_access_token(code_url_param)
 
@@ -132,12 +131,13 @@ class SessionsController < ApplicationController
     begin
       @response = RestClient.get(APP_CONFIG['service_url'], :authorization => "Bearer:" + access_token)
 
+      puts  JSON.parse(@response)['data']['role']['namelowered']
 
       session[:name] = JSON.parse(@response)['data']['displayname']
       session[:user_id] =  JSON.parse(@response)['data']['id']
       session[:email] =  JSON.parse(@response)['data']['email']
-
-      create(session[:email], session[:user_id], session[:name])
+      session[:role]  = JSON.parse(@response)['data']['role']['namelowered']
+      create(session[:email], session[:user_id], session[:name], session[:role])
 
 
       return :res => res, :error => false

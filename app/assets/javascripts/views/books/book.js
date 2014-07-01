@@ -10,7 +10,8 @@ GoogleBooks.Views.Book = Backbone.View.extend({
         'click a.remove-item': 'removeItem',
         'click .deets': 'renderDetails',
         'click a.infoOpen' : 'showInfo',
-        'click span.close-details' : 'hideInfo'
+        'click span.close-details' : 'hideInfo',
+        'click a.attach' : 'attach'
     },
 
     initialize : function() {
@@ -22,6 +23,8 @@ GoogleBooks.Views.Book = Backbone.View.extend({
 
         var attr = this.model.attributes;
         $(this.el).html(this.template({
+            mode : CHLK_MODE,
+            user_role: CHLK_USER_ROLE,
             title: attr.title,
             thumbnail: attr.thumbnail,
             author: attr.author,
@@ -39,7 +42,7 @@ GoogleBooks.Views.Book = Backbone.View.extend({
             model: that.model
         });
         console.log(detailsView);
-        return  $('body').find("#details").append(detailsView.render().el);
+        return  $('body').find("#details").append(detailsView.render());
 
 
     },
@@ -55,5 +58,30 @@ GoogleBooks.Views.Book = Backbone.View.extend({
 
     hideInfo: function() {
         classie.remove( this.el.children[0], 'details-open' );
+    },
+
+    attach: function(e){
+        e.preventDefault();
+        console.log('attach!!');
+        var annId = CHLK_ANN_ID;
+        var attr = this.model.attributes;
+
+        var bookData = {
+            g_books_id : attr.readerLink,
+            announcementapplicationid: annId
+        };
+
+        $.ajax({
+            method: 'POST',
+            url: 'announcements/' + annId,
+            dataType: 'json',
+            data: bookData,
+            success: function (data) {
+                console.log(data)
+
+                $('.flasher').addClass('show');
+
+            }
+        });
     }
 });

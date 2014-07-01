@@ -1,4 +1,6 @@
 GBooks::Application.routes.draw do
+  get "announcements/new"
+  get "announcements/create"
   #get "home/index"
   root :to => 'sessions#index'
 
@@ -13,8 +15,6 @@ GBooks::Application.routes.draw do
   resources :books
 
 
-
-
   match 'start'  => 'sessions#index', :via => :get
   match 'logout' => 'sessions#destroy', :via => [:get, :delete]
   match 'signup' => 'users#new', :via => :get
@@ -22,5 +22,9 @@ GBooks::Application.routes.draw do
   resource :session, :only => [:new, :create, :destroy]
   resource :account, :controller => 'users', :except => [:index, :destroy, :show, :edit]
 
+  resources :announcements
+
+  post "/announcements/:id", :to => "announcements#create"
+  get "/announcements/:id", :to => "announcements#show"
 
 end

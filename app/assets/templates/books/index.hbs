@@ -9,9 +9,11 @@
                             <input placeholder="Search" type="search" class="gn-search" id="add-item">
                             <a class="gn-icon gn-icon-search"><span>Search</span></a>
                         </li>
-                        <li id="myBooks"></li>
                         <li>
                             <a href="#topics" class="gn-icon gn-icon-archive">Topics</a>
+                        </li>
+                        <li id="myBooks">
+                            <!--wants-->
                         </li>
                     </ul>
                 </div><!-- /gn-scroller -->
@@ -24,6 +26,9 @@
 
 <br>
 
+<div class="flasher">
+    <p>Successfully attached, Just click attach!</p>
+</div>
 <div class="bookshelf">
     <div id="topics"></div>
     <div class="row">
@@ -32,7 +37,16 @@
 </div>
 
 
-<div id="details"></div>
+<div id="details" style="width: 80%;margin: 0 auto;">
+    <div class="window-overlay">
+
+        <div id="viewer" style="height: 600px"></div>
+        <div class="modal-footer">
+            <button id="closer" type="button" class="btn btn-default">Close</button>
+            <button id="want-button" type="button" class="btn btn-primary">Want it</button>
+        </div>
+    </div>
+</div>
 
 <div id="viewerCanvas"></div>
 

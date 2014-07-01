@@ -23,6 +23,7 @@
 //= require dotdotdot
 //= require masonry
 //= require handlebars
+//= require bb-query-params
 
 //
 //= require g_books

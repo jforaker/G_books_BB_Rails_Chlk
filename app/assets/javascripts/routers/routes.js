@@ -9,13 +9,60 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
         "topics" : "topics"
     },
 
+
     _setDefault: function() {
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
+
+        var that = this;
         console.log("[setDefault]");
         //Backbone.history.navigate('home');
 
         CHLK_USER = {};
+        CHLK_ANN_ID ={};
+        CHLK_USER_ROLE ={};
+        CHLK_MODE = {};
+
+        var url = $.url();
+        var mode = url.data.param.query.mode;
+
+        console.info(url.data.param.query);
+        CHLK_ANN_ID =  url.data.param.query.announcementapplicationid;
+
+        switch (mode){
+            case  "myview":
+                console.log('my view ===');
+                CHLK_MODE = null
+                break;
+            case "edit":
+                console.info('edit =====');
+                console.info(CHLK_ANN_ID);
+                CHLK_MODE = true
+
+                break;
+            case "gradingview":
+                console.info('grading view ======');
+                CHLK_MODE = null
+
+                $.ajax({
+                    url: '/announcements/' + CHLK_ANN_ID + '.json',
+                    dataType: 'json',
+                    data: {
+                        announcementapplicationid : CHLK_ANN_ID
+                    },
+                    success: function (data) {
+                        console.info(data)
+                        var g_books_id = data.g_books_id;
+                        that.showAttached(g_books_id)
+                    }
+                });
+
+                break;
+            case "view":
+                console.info('grading view ======');
+                CHLK_MODE = "view";
+                break;
+
+            //TODO -- come back to VIEW when it is fixed
+        }
 
 
         $.ajax({
@@ -24,22 +71,31 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             success: function (data) {
                 console.log(data)
                 CHLK_USER.name = data.user;
+                CHLK_USER_ROLE = (data.role == "student") ? false : true
             }
         });
 
         this.index();
     },
 
+    showAttached: function(id){
+
+        console.info('IDD ====' + id);
+        var item = new GoogleBooks.Views.AttachedBook({
+            model: new Backbone.Model({
+                id: id
+            })
+        });
+        item.render(id).$el;
+    },
+
+
     index: function() {
-        console.log('Router > index');
-
-
         var items = new GoogleBooks.Collections.Items();
         new GoogleBooks.Views.ItemsIndex({
             collection: items
         });
         items.fetch({reset: true});
-
     },
 
     getMyBooks: function(){

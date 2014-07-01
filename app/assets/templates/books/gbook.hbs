@@ -5,6 +5,11 @@
     <div class="buttons">
         <a href="#" class="deets">Look inside</a>
         <a class="infoOpen" href="#">Info</a>
+        {{#if user_role}}
+            {{#if mode}}
+                <a class="attach" href="#">Attach </a>
+            {{/if}}
+        {{/if}}
     </div>
     <figcaption>
         <h2 class="title"> {{title}} <span>{{author}}</span></h2>
@@ -17,5 +22,7 @@
             <li>{{pageCount}} pages</li>
         </ul>
         <span class="close-details"></span>
+        <span id='remove-book'>remove from My Library</span>
+
     </div>
 </figure>

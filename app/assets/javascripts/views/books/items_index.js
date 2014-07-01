@@ -49,7 +49,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             });
         } else {
             initPlugins();
-            $('.bookshelf > .row').html('search for a book!')
+            $('.bookshelf').html('search for a book!')
         }
     },
 

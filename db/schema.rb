@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630171112) do
+ActiveRecord::Schema.define(version: 20140630185207) do
+
+  create_table "announcements", force: true do |t|
+    t.string   "announcement_application_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "g_books_id"
+    t.string   "announcementapplicationid"
+  end
 
   create_table "books", force: true do |t|
     t.string   "title"

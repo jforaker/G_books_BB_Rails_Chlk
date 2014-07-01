@@ -11,12 +11,9 @@ class BooksController < ApplicationController
 
     puts current_user.user_id
 
-    mode = params[:mode]
-    code = params[:code]
+    mode = params[:mode].to_s
 
-    if params.has_key?(:code)
-      get_access_token(code)
-    end
+    puts 'mode == ' + mode
 
     @show_plus = mode == 'edit'
 
@@ -35,7 +32,9 @@ class BooksController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: {:items => @items,
-                                  :user => session[:name]}}
+                                  :user => session[:name],
+                                  :role => session[:role],
+                                  :mode => mode}}
     end
 
   end

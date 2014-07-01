@@ -17,26 +17,30 @@ $(document).ready(function(){
 
 
 
-    function cb(){
-        var $container = $('#container');
-        $container.imagesLoaded( function(){
-            $container.masonry({
-                itemSelector: '.book-holder',
-                "isFitWidth": true,
-                isAnimated: true
-            });
-        });
+//    function cb(){
+//        var $container = $('#container');
+//        $container.imagesLoaded( function(){
+//            $container.masonry({
+//                itemSelector: '.book-holder',
+//                "isFitWidth": true,
+//                isAnimated: true
+//            });
+//        });
+//
+//        setTimeout(function(){
+//            $container.masonry('bindResize');
+//            $container.masonry( 'on', 'layoutComplete', function( msnryInstance, laidOutItems ) {
+//                console.log('Masonry layout completed on ' + laidOutItems.length + ' items');
+//
+//            })
+//        },2255);
+//
+//    }
+//
+//    cb();
 
-        setTimeout(function(){
-            $container.masonry('bindResize');
-            $container.masonry( 'on', 'layoutComplete', function( msnryInstance, laidOutItems ) {
-                console.log('Masonry layout completed on ' + laidOutItems.length + ' items');
-
-            })
-        },2255);
-
-    }
-
-    cb();
+    $('.window-overlay').click(function(){
+        $('.window-overlay').css('display', 'none');
+    })
 
 });

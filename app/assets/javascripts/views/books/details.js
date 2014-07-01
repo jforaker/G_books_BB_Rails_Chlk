@@ -9,12 +9,14 @@ GoogleBooks.Views.Details = Backbone.View.extend({
     },
 
     initialize : function() {
-        _.bindAll(this, "render", "showModal", "showBook", "renderModal");
+      //  _.bindAll(this, "render", "showModal", "showBook","pushstateClick", "closeMe", "hideModaler");
+        this.listenTo(this.model, 'change');
+          _.bindAll(this, "render", "showModal","pushstateClick", "closeMe", "hideModaler" , "wantClick");
+
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
     },
 
     render:function () {
-
         var that = this;
         var attr = this.model.attributes,
             id = attr.readerLink;
@@ -27,10 +29,6 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         return this;
     },
 
-    renderModal: function(ids){
-        $(this.el).html(this.template());
-        this.showModal(id);
-    },
 
 
     showModal: function(ids){
@@ -39,7 +37,7 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         function callbackFn() {
             var id = ids;
 
-            $('.window-overlay').fadeIn("fast");
+            $('.window-overlay').show();
             //that.showBook(id);
             var canvas = document.getElementById('viewer');
             var viewer = new google.books.DefaultViewer(document.getElementById('viewer'));
@@ -51,17 +49,6 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         }
 
         google.load("books", "0", { "callback" : callbackFn });
-//        google.setOnLoadCallback(callbackFn(id));
-
-    },
-
-    showBook: function(id){
-
-
-
-
-
-
 
     },
 
