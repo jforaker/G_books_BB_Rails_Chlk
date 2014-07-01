@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630185207) do
+ActiveRecord::Schema.define(version: 20140701153651) do
 
   create_table "announcements", force: true do |t|
     t.string   "announcement_application_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "g_books_id"
-    t.string   "announcementapplicationid"
+    t.integer  "announcementapplicationid",   limit: 255
   end
 
   create_table "books", force: true do |t|
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140630185207) do
     t.string   "author"
     t.integer  "pageCount"
     t.integer  "publishedDate"
-    t.string   "user_id"
+    t.integer  "user_id",       limit: 255
   end
 
   create_table "users", force: true do |t|
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140630185207) do
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_id"
+    t.integer  "user_id",    limit: 255
   end
 
 end
