@@ -12,3 +12,5 @@ production:
   scope: https://chalkable.com
   redirect_uri: http://nameless-tor-8380.herokuapp.com/start
   service_url: https://chalkable.com/Person/Me.json
+
+  #sadf
