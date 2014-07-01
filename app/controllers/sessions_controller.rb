@@ -4,16 +4,6 @@ class SessionsController < ApplicationController
   respond_to  :json
 
 
-
-  def destroy
-    destroy_user_session
-    redirect_to '/', :notice => "Logged out."
-  end
-
-
-
-
-
   def index
 
     mode = params[:mode]
@@ -28,7 +18,6 @@ class SessionsController < ApplicationController
     # get the unique id of this assignment with the app attached (should be used to save / read appropriate data)
     @announcement_application_id = params[:announcementapplicationid].to_i
 
-    puts params[:announcementapplicationid].to_i
 
     # get the student id of the current student's assignment (if viewing it as a teacher in the 'view' mode)
     @student_id = params[:studentid]
@@ -64,6 +53,8 @@ class SessionsController < ApplicationController
     #  end
     #end
 
+    puts code_url_param
+
     begin
       options =   { :body => {
           :code => code_url_param,
@@ -82,57 +73,49 @@ class SessionsController < ApplicationController
     end
 
     parsed_response = JSON.parse(oauth_response.to_json)
-    @access_token = parsed_response["access_token"]
+    access_token = parsed_response["access_token"]
 
-    session[:acs_token] = {:token => @access_token, :code => @code}
+    puts parsed_response
+
+    #session[:acs_token] = {:token => access_token, :code => code_url_param}
 
 
-    if params.has_key?(:code)
-      get_current_user(@access_token)
-    end
+    get_current_user(access_token)
+
 
   end
 
   def get_current_user(access_token)
     begin
-      @response = RestClient.get(APP_CONFIG['service_url'], :authorization => "Bearer:" + access_token)
+      puts access_token
+      response = RestClient.get('https://chalkable.com/Person/Me.json', :authorization => "Bearer:" + access_token)
 
-      puts  JSON.parse(@response)['data']['role']['namelowered']
-
-      session[:name] = JSON.parse(@response)['data']['displayname']
-      session[:user_id] =  JSON.parse(@response)['data']['id']
-      session[:email] =  JSON.parse(@response)['data']['email']
-      session[:role]  = JSON.parse(@response)['data']['role']['namelowered']
+      puts response
+      session[:name] = JSON.parse(response)['data']['displayname']
+      session[:user_id] =  JSON.parse(response)['data']['id']
+      session[:email] =  JSON.parse(response)['data']['email']
+      session[:role]  = JSON.parse(response)['data']['role']['namelowered']
       create(session[:email], session[:user_id], session[:name], session[:role])
 
-
-      return :res => res, :error => false
     rescue => e
-      return :res => e, :error => true, :stack_trace => e.backtrace
+      puts e.response
     end
   end
 
   def create(e, u_id, name, role)
 
     @user = User.where(:email => e).first_or_create do |user|
-      # This block is called with a new user object with only :email set
-      # Customize this object to your will
-      user.attributes = {:email => e, :user_id => u_id, :name => name, :role => role}
+
+      user.attributes = {:email => e, :user_id => u_id, :name => name, :uid => role}
+
       # After this, first_or_create will call user.create, so you don't have to
 
       redirect_to '/books'
     end
-
-    puts @user.user_id
-
   end
 
 
   private
-
-  def user_params
-    return session[:email], session[:user_id]
-  end
 
   def allow_iframe
     response.headers.except! 'X-Frame-Options'

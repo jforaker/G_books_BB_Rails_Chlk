@@ -5,6 +5,8 @@ class BooksController < ApplicationController
 
   respond_to :html, :xml, :json
 
+
+
   def index
 
     @items = current_user.books
@@ -12,14 +14,12 @@ class BooksController < ApplicationController
 
     mode = params[:mode].to_s
 
-    puts 'mode == ' + mode
+    logger.info current_user.name
 
     @show_plus = mode == 'edit'
 
     # get the unique id of this assignment with the app attached (should be used to save / read appropriate data)
     @announcement_application_id = params[:announcementapplicationid].to_i
-
-    puts params[:announcementapplicationid].to_i
 
     # get the student id of the current student's assignment (if viewing it as a teacher in the 'view' mode)
     @student_id = params[:studentid]
