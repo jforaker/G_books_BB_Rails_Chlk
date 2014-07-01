@@ -9,8 +9,8 @@ production:
   acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13
   client_id: http://mysterious-anchorage-1858.herokuapp.com/start
   client_secret: 5ee3880632f943b1b7999de04d8a9c0b438897e891ac47b5a66b274a50050b027b504468fd9846d3a741247509eadaae4b4330d1309e4b8dbcb6ba56e2f284e8
-  scope: https://chalkable.com
+  scope: https://qa.chalkable.com
   redirect_uri: http://mysterious-anchorage-1858.herokuapp.com/start
-  service_url: https://chalkable.com/Person/Me.json
+  service_url: https://qa.chalkable.com/Person/Me.json
 
   #sadfd
