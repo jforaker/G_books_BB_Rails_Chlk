@@ -3,41 +3,7 @@ class SessionsController < ApplicationController
 
   respond_to  :json
 
-  def create(e, u_id, name, role)
-    #@user = User.authenticate(e, u_id)
-    #
-    #if @user
-    #  puts "@ user ==============="
-    #  create_user_session(@user)
-    #  respond_with @user, :location => '/', :notice => "Login succesful."
-    #else
-    #  puts "else ================"
-    #  #respond_to do |format|
-    #  #  format.html { render 'new' }
-    #  #  format.json { render :json => {:error => "Invalid email or password."} }
-    #  #end
-    #
-    #  @user = User.new(params[:user_id])
-    #
-    #  if @user.save
-    #    flash[:notice] = 'Account created.'
-    #    puts 'Account created.'
-    #  end
-    #  respond_with @user, :location => '/'
-    #
-    #
-    #end
 
-    @user = User.where(:email => e).first_or_create do |user|
-      # This block is called with a new user object with only :email set
-      # Customize this object to your will
-      user.attributes = {:email => e, :user_id => u_id, :name => name, :role => role}
-      # After this, first_or_create will call user.create, so you don't have to
-
-      redirect_to '/books'
-    end
-
-  end
 
   def destroy
     destroy_user_session
@@ -144,6 +110,21 @@ class SessionsController < ApplicationController
     rescue => e
       return :res => e, :error => true, :stack_trace => e.backtrace
     end
+  end
+
+  def create(e, u_id, name, role)
+
+    @user = User.where(:email => e).first_or_create do |user|
+      # This block is called with a new user object with only :email set
+      # Customize this object to your will
+      user.attributes = {:email => e, :user_id => u_id, :name => name, :role => role}
+      # After this, first_or_create will call user.create, so you don't have to
+
+      redirect_to '/books'
+    end
+
+    puts @user.user_id
+
   end
 
 

@@ -6,9 +6,8 @@ class BooksController < ApplicationController
   respond_to :html, :xml, :json
 
   def index
-    @current_user = User.find_by_user_id(session[:user_id])
 
-    @items = @current_user.books
+    @items = current_user.books
 
 
     mode = params[:mode].to_s
