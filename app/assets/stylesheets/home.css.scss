@@ -2,3 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#splash{
+  height:100%;
+  left:0;
+  position:absolute;
+  top:0;
+  width:100%;
+}
+#splash .loaded{
+  display:none;
+}

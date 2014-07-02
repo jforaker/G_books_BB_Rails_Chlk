@@ -60,7 +60,7 @@ class SessionsController < ApplicationController
           :code => code_url_param,
           :client_id => APP_CONFIG['client_id'],
           :client_secret => APP_CONFIG['client_secret'],
-          :scope => 'https://chalkable.com',
+          :scope => APP_CONFIG['scope'],
           :redirect_uri => APP_CONFIG['client_id'],
           :grant_type => 'authorization_code'
       }}

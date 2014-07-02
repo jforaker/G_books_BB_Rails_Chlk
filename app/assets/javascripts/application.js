@@ -34,3 +34,6 @@
 //= require_tree ./routers
 //= require_tree ../templates/
 
+$('body').find('.window-overlay').click(function(){
+    $('.window-overlay').css('display', 'none');
+})

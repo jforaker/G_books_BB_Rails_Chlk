@@ -1,16 +1,10 @@
 GoogleBooks.Views.Topics = Backbone.View.extend({
 
+    el: "#topics",
+    tagName: 'li',
     template: JST['topics'],
-    el: ".bookshelf",
-    tagName: 'a',
-
-    model: this.model,
-    collection: new GoogleBooks.Collections.Items(),
     events : {
-        'click a' : 'click_handler',
-        'hover a' : 'addHover',
-        'mouseover': 'mouseovercard'
-
+        'click a' : 'click_handler'
     },
 
     initialize: function() {
@@ -18,21 +12,21 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
     },
 
     render : function() {
-
         $(this.el).html(this.template({
-            art: "art",
-            history: "history"
+            Art: 'Art',
+            History: 'History',
+            Drama: 'Drama',
+            Science: 'Science',
+            Biography: 'Biography',
+            Classics: 'Classics',
+            Comics: 'Comics',
+            Poetry: 'Poetry'
         }));
-
         return this;
     },
 
-    mouseovercard: function() {
-        console.log('hello world');
-    },
-
     query: function(val){
-        //e.preventDefault();
+
         var items = new GoogleBooks.Collections.Items();
         var view = new GoogleBooks.Views.ItemsIndex({
             collection: items
@@ -40,18 +34,9 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
         view.queryApi(val, 0, 10)
     },
 
-    click_handler: function() {
-        var ele = $('.bookshelf').find('a');
-
-
-        if (ele.hasClass('art')) {
-            this.query('art');
-        } else if (ele.hasClass('history')) {
-            this.query('history');
-        } else if (this.$el.hasClass('free')) {
-            //this.checkIn();
-        } else {
-            // oops!?
-        }
+    click_handler: function(e) {
+        var name = e.target.className;
+        this.query(name);
+        $('body').find('#all-wants').html('');
     }
 });

@@ -16,7 +16,7 @@ $(document).ready(function(){
     GoogleBooks.initialize();
 
 
-
+//
 //    function cb(){
 //        var $container = $('#container');
 //        $container.imagesLoaded( function(){
@@ -39,8 +39,5 @@ $(document).ready(function(){
 //
 //    cb();
 
-    $('.window-overlay').click(function(){
-        $('.window-overlay').css('display', 'none');
-    })
 
 });

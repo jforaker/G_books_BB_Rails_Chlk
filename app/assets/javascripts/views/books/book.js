@@ -1,5 +1,6 @@
 GoogleBooks.Views.Book = Backbone.View.extend({
 
+    tagName: 'li',
     template : JST['books/gbook'],
     className: 'book-holder',
     attributes: {

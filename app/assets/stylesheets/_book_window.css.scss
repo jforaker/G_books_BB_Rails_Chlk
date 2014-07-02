@@ -9,6 +9,13 @@
   width: 100%;
   z-index: 20;
 
+  .modal-header{
+    margin-top: 84px;
+    padding: 19px 20px 20px;
+    text-align: right;
+    float: right;
+  }
+
   #viewer{
     width: 733px;
     z-index: 25;

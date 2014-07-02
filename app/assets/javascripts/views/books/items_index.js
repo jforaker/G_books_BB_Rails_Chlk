@@ -54,7 +54,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             initPlugins();
             var row = $('<div class="rowerg"></div> ');
             $(that.$el.find('.bookshelf').append(row));
-            row.html("Welcome to Google Books Reader. Search for a book and add it to your library.");
+            row.html('Hi ' +CHLK_USER.name + ', welcome to Google Books Reader. Search for a book and add it to your library.');
 
         }
     },
@@ -154,7 +154,6 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             url = 'https://www.googleapis.com/books/v1/volumes?',
             data = 'q='+encodeURIComponent(term)
                 +'&startIndex='+index+'&maxResults='+maxResults
-                +'&orderBy=newest'
                 +'&filter=free-ebooks&key='
                 +this.vars().API_KEY+'&projection=full';
 
