@@ -7,8 +7,8 @@ development:
   service_url: https://chalkable.com/Person/Me.json
 production:
   acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13
-  client_id: https://chalkable-google-books.herokuapp.com/start
+  client_id: http://chalkable-google-books.herokuapp.com/start
   client_secret: fc179c3e7dfc4cb99d459c6cdf43a781904dc84dd93f4bd090a768f240db4b4a3f17d0572ca4458785bc1b7b9be280727f9f2ad2c9244f2cbd825ceda76066c3
   scope: https://chalkable.com
-  redirect_uri: https://chalkable-google-books.herokuapp.com/start
+  redirect_uri: http://chalkable-google-books.herokuapp.com/start
   service_url: https://chalkable.com/Person/Me.json
