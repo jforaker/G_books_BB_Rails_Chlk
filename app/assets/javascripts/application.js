@@ -14,6 +14,7 @@
 //= require modernizr
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
+//= require jquery.ui.dialog
 //= require jsapi
 //= require underscore
 //= require backbone
@@ -34,3 +35,6 @@
 //= require_tree ./routers
 //= require_tree ../templates/
 
+$('body').find('.window-overlay').click(function(){
+    $('.window-overlay').hide();
+});

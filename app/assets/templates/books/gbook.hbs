@@ -1,25 +1,30 @@
 
 
-<figure>
+<figure> <!--class="details-open"-->
     <div class="book"><img class="" src="{{thumbnail}}"></div>
     <div class="buttons">
         <a href="#" class="deets">Look inside</a>
         <a class="infoOpen" href="#">Info</a>
         {{#if user_role}}
             {{#if mode}}
-                <a class="attach" href="#">Attach </a>
+                <a class="attach" href="#">Attach</a>
             {{/if}}
         {{/if}}
     </div>
     <figcaption>
-        <h2 class="title"> {{title}} <span>{{author}}</span></h2>
+        <h2 class="title">
+            {{title}}
+            <span>{{author}}</span>
+        </h2>
     </figcaption>
 
     <div class="details">
         <ul>
             <li><a href="#" class="deets gn-icon gn-icon-article">Look inside</a></li>
             <li>published {{publishedDate}}</li>
-            <li>{{pageCount}} pages</li>
+            {{#if pageCount}}
+                <li> pages </li>
+            {{/if}}
         </ul>
         <span class="close-details"></span>
         <span id='remove-book'>remove from My Library</span>

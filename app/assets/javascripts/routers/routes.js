@@ -50,8 +50,13 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                     },
                     success: function (data) {
                         console.info(data)
+                        if (!data) this.failure(data)
                         var g_books_id = data.g_books_id;
+
                         that.showAttached(g_books_id)
+                    },
+                    failure: function(data){
+                        console.log('get announcemment fail ')
                     }
                 });
                 break;
@@ -75,26 +80,16 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             }
         });
 
-        this.index();
+        that.index();
+
     },
 
     showAttached: function(id){
-
-//        console.info('IDD ====' + id);
-//        var item = new GoogleBooks.Views.AttachedBook({
-//            model: new Backbone.Model({
-//                id: id
-//            })
-//        });
-//        item.initialize();
-//        item.render(id);
-
-        var that = this,
-            detailsView = new GoogleBooks.Views.Details({
-                model: new Backbone.Model({
-                    id: id
-                })
-            });
+        var detailsView = new GoogleBooks.Views.Details({
+            model: new Backbone.Model({
+                id: id
+            })
+        });
         console.log(detailsView);
         detailsView.initialize();
 
@@ -133,8 +128,9 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     },
 
     topics: function(){
-        var topicsView = new GoogleBooks.Views.Topics();
-        topicsView.render();
+        console.log('topics clicked');
+//        var topicsView = new GoogleBooks.Views.Topics();
+//        topicsView.render();
     }
 
 });

@@ -10,7 +10,7 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
     initialize : function() {
       //  _.bindAll(this, "render", "showModal", "showBook","pushstateClick", "closeMe", "hideModaler");
-        this.listenTo(this.model, 'change');
+        this.listenTo(this.model, 'save');
           _.bindAll(this, "render", "showModal","pushstateClick", "closeMe", "hideModaler" , "wantClick");
 
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
@@ -18,8 +18,8 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
     render:function (i) {
         var that = this;
-        var attr = this.model.attributes,
-            id = attr.readerLink;
+        var attr = this.model.attributes;
+        var id = attr.readerLink;
         $(this.el).html(this.template({
             title: attr.title || '',
             thumbnail: attr.thumbnail || '',
@@ -32,19 +32,14 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
 
     showModal: function(ids){
-        var that = this;
-        // Load the Embedded Viewer API, calling showBook when it's ready
         function callbackFn() {
-            var id = ids;
-
             $('.window-overlay').show();
-            //that.showBook(id);
             var canvas = document.getElementById('viewer');
             var viewer = new google.books.DefaultViewer(document.getElementById('viewer'));
             var canvasDiv = $('#viewer');
 
             console.log(canvas);
-            viewer.load(id);
+            viewer.load(ids);
             canvasDiv.fadeIn("fast");
         }
 
@@ -69,11 +64,10 @@ GoogleBooks.Views.Details = Backbone.View.extend({
     wantClick: function(e){
         e.preventDefault();
         $('.window-overlay').hide();
-
         var model = this.model;
         model.set({
             wantToRead: true,
-            readerLink: model.attributes.readerLink
+            readerLink: model.get('readerLink')
         });
         model.save();
         console.log(model);

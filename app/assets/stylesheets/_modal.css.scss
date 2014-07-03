@@ -44,3 +44,46 @@
   float: right;
 }
 
+
+.ui-widget.success-dialog {
+  font-family: 'Lato' ,Arial,sans-serif;
+  font-size: 1.5em;
+}
+
+.ui-widget-content.success-dialog {
+  background: #F9F9F9;
+  border: 1px solid tomato;
+  color: #222222;
+}
+
+.ui-dialog.success-dialog {
+  left: 0;
+  outline: 0 none;
+  padding: 1em !important;
+  position: absolute;
+  top: 0;
+  .ui-dialog-content {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    overflow: auto;
+    position: relative;
+    padding: 0 !important;
+    margin: 0;
+  }
+  .ui-widget-header {
+    background: tomato;
+    border: 0;
+    color: #fff;
+    font-weight: normal;
+  }
+  .ui-dialog-titlebar {
+    padding: 0.1em .5em;
+    position: relative;
+    font-size: 1em;
+    display: none;
+  }
+  .ui-dialog-buttonpane.ui-widget-content{
+    background: none !important;
+    border: none !important;
+  }
+}

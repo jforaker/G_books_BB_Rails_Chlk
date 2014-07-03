@@ -116,7 +116,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit( :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink, :author, :pageCount, :publishedDate)
+    params.require(:book).permit(:id, :created_at, :updated_at, :user_id, :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink, :author, :pageCount, :publishedDate)
   end
 
   def allow_iframe

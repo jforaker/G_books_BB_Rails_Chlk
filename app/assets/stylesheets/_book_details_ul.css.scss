@@ -271,9 +271,13 @@
     letter-spacing: 1px;
     font-size: 0.65em;
     line-height: 1.5;
-    &:first-child:not(:only-child) {
+    &:first-child {
       border-right: 1px solid rgba(100, 105, 106, 0.3);
     }
+    &:nth-child(2) {
+      border-right: 1px solid rgba(100, 105, 106, 0.3);
+    }
+
     &:hover, &:active {
       color: #64696a;
     }

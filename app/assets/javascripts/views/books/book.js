@@ -1,5 +1,6 @@
 GoogleBooks.Views.Book = Backbone.View.extend({
 
+    tagName: 'li',
     template : JST['books/gbook'],
     className: 'book-holder',
     attributes: {
@@ -38,9 +39,9 @@ GoogleBooks.Views.Book = Backbone.View.extend({
     renderDetails: function(e){
         e.preventDefault();
         var that = this,
-        detailsView = new GoogleBooks.Views.Details({
-            model: that.model
-        });
+            detailsView = new GoogleBooks.Views.Details({
+                model: that.model
+            });
         console.log(detailsView);
         return  $('body').find("#details").append(detailsView.render());
 
@@ -65,7 +66,7 @@ GoogleBooks.Views.Book = Backbone.View.extend({
         console.log('attach!!');
         var annId = CHLK_ANN_ID;
         var attr = this.model.attributes;
-
+        var flasher =  $('#flasher');
         var bookData = {
             g_books_id : attr.readerLink,
             announcementapplicationid: annId
@@ -77,10 +78,10 @@ GoogleBooks.Views.Book = Backbone.View.extend({
             dataType: 'json',
             data: bookData,
             success: function (data) {
-                console.log(data)
+                console.log(data);
 
-                $('.flasher').addClass('show');
-
+                flasher.addClass('show');
+                flasher.find('p').html('You attached ' + attr.title + ' to this item. Just click "Attach"!')
             }
         });
     }

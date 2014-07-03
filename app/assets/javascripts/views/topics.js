@@ -1,57 +1,49 @@
 GoogleBooks.Views.Topics = Backbone.View.extend({
 
+//    el: "#topics",
+    el : 'UL#dropper', //list item that controls the books in the #all-wants div
+
+    tagName: 'li',
     template: JST['topics'],
-    el: ".bookshelf",
-    tagName: 'a',
-
-    model: this.model,
-    collection: new GoogleBooks.Collections.Items(),
     events : {
-        'click a' : 'click_handler',
-        'hover a' : 'addHover',
-        'mouseover': 'mouseovercard'
-
+        'click a' : 'click_handler'
     },
 
     initialize: function() {
-        _.bindAll(this, 'render');
+        this.collection = new GoogleBooks.Collections.Items();
+        this.listenTo(this.collection, 'reset', this.render);
+        return this.listenTo(this.collection, 'add', this.addBook);
     },
 
     render : function() {
+        //$('body').find('.rower').hide();
+       // $('body').find('.bookshelf').html('');
 
+        $(this.$el).show();
         $(this.el).html(this.template({
-            art: "art",
-            history: "history"
+            Art: 'Art',
+            History: 'History',
+            Drama: 'Drama',
+            Science: 'Science',
+            Biography: 'Biography',
+            Classics: 'Classics',
+            Poetry: 'Poetry'
         }));
-
         return this;
     },
 
-    mouseovercard: function() {
-        console.log('hello world');
-    },
-
     query: function(val){
-        //e.preventDefault();
-        var items = new GoogleBooks.Collections.Items();
+        var items = new GoogleBooks.Collections.MyBooksCollection();
         var view = new GoogleBooks.Views.ItemsIndex({
             collection: items
         });
-        view.queryApi(val, 0, 10)
+        view.queryApi(val, 0, 10, 'query')
     },
 
-    click_handler: function() {
-        var ele = $('.bookshelf').find('a');
+    click_handler: function(e) {
+        var name = e.target.className;
+        this.query(name);
+        $('.rower').find('#all-wants').hide();
 
-
-        if (ele.hasClass('art')) {
-            this.query('art');
-        } else if (ele.hasClass('history')) {
-            this.query('history');
-        } else if (this.$el.hasClass('free')) {
-            //this.checkIn();
-        } else {
-            // oops!?
-        }
     }
 });

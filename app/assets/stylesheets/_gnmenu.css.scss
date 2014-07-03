@@ -12,10 +12,10 @@
 
 /* placeholder */
 
-.gn-search::-webkit-input-placeholder {
-  color: #5f6f81 ;
-}
 
+input.gn-search:focus {
+  cursor: text
+}
 /* Icomoon.com */
 
 .gn-menu-main {
@@ -165,27 +165,6 @@
   }
 }
 
-input.gn-search {
-  position: relative;
-  z-index: 10;
-  padding-left: 60px;
-  outline: none;
-  border: none;
-  background: transparent;
-  color: #5f6f81;
-  font-weight: 300;
-  font-family: 'Lato', Arial, sans-serif;
-  cursor: pointer;
-
-
-}
-
-
-
-
-input.gn-search:focus {
-  cursor: text;
-}
 
 
 
@@ -234,7 +213,24 @@ input.gn-search:focus {
 
 .gn-icon-download::before {
   content: "\e007";
+
+  -webkit-transform:rotate(0deg);
+  -moz-transform:rotate(0deg);
+  -o-transform:rotate(0deg);
+
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -o-transition-property: -o-transform;
+  transition-property: transform;
+
 }
+
+
 
 .gn-icon-archive::before {
   content: "\e00d";
@@ -299,7 +295,7 @@ input.gn-search:focus {
     transform: translateX(0px);
   }
   &.gn-open-all {
-    width: 340px;
+    width: 275px;
     .gn-submenu li {
       height: 60px;
     }
@@ -317,3 +313,47 @@ input.gn-search:focus {
     }
   }
 }
+
+input.gn-search {
+  position: relative;
+  z-index: 10;
+  padding-left: 60px;
+  outline: none;
+  border: none;
+  background: transparent;
+  color: #5f6f81;
+  font-weight: 300;
+  font-family: 'Lato', Arial, sans-serif;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+#removeAll{
+  width: 29%;
+  margin: -5px 60px 9px;
+  padding: 0px;
+  color: white;
+  font-weight: lighter;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gn-icon-download.closed::before{
+
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+
+  -webkit-transition-duration: 0.8s;
+  -moz-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+
+
+
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -o-transition-property: -o-transform;
+  transition-property: transform;
+
+}
+

@@ -1,4 +1,4 @@
-GoogleBooks.Views.Wants = Backbone.View.extend({
+GoogleBooks.Views.MyLibrary = Backbone.View.extend({
     el : '.bookshelf',
 
     initialize : function() {
@@ -9,8 +9,9 @@ GoogleBooks.Views.Wants = Backbone.View.extend({
     },
 
     render : function() {
-
-        console.log('WANTSS')
+        $('body').find('#topics').hide();
+        $(this.$el).show();
+        console.log('WANTSS');
         var that = this,
             oldCollections = this.collection,
             results = oldCollections.where({
