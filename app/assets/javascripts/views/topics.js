@@ -1,6 +1,8 @@
 GoogleBooks.Views.Topics = Backbone.View.extend({
 
-    el: "#topics",
+//    el: "#topics",
+    el : 'UL#dropper', //list item that controls the books in the #all-wants div
+
     tagName: 'li',
     template: JST['topics'],
     events : {
@@ -8,10 +10,16 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
     },
 
     initialize: function() {
-        _.bindAll(this, 'render');
+        this.collection = new GoogleBooks.Collections.Items();
+        this.listenTo(this.collection, 'reset', this.render);
+        return this.listenTo(this.collection, 'add', this.addBook);
     },
 
     render : function() {
+        //$('body').find('.rower').hide();
+       // $('body').find('.bookshelf').html('');
+
+        $(this.$el).show();
         $(this.el).html(this.template({
             Art: 'Art',
             History: 'History',
@@ -19,24 +27,23 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
             Science: 'Science',
             Biography: 'Biography',
             Classics: 'Classics',
-            Comics: 'Comics',
             Poetry: 'Poetry'
         }));
         return this;
     },
 
     query: function(val){
-
-        var items = new GoogleBooks.Collections.Items();
+        var items = new GoogleBooks.Collections.MyBooksCollection();
         var view = new GoogleBooks.Views.ItemsIndex({
             collection: items
         });
-        view.queryApi(val, 0, 10)
+        view.queryApi(val, 0, 10, 'query')
     },
 
     click_handler: function(e) {
         var name = e.target.className;
         this.query(name);
-        $('body').find('#all-wants').html('');
+        $('.rower').find('#all-wants').hide();
+
     }
 });

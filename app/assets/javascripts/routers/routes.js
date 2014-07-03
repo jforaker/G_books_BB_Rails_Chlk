@@ -128,23 +128,8 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     },
 
     topics: function(){
-        var topicsView = new GoogleBooks.Views.Topics();
-        topicsView.render();
-
-//        var coll =  new Backbone.Collection({
-//            Art: 'Art',
-//            History: 'History',
-//            Drama: 'Drama',
-//            Science: 'Science',
-//            Biography: 'Biography',
-//            Classics: 'Classics',
-//            Comics: 'Comics',
-//            Poetry: 'Poetry'
-//        });
-//        var topicsView = new GoogleBooks.Views.ListMenuView({
-//            collection: coll
-//        });
-//        console.log(coll);
+        console.log('topics clicked');
+//        var topicsView = new GoogleBooks.Views.Topics();
 //        topicsView.render();
     }
 

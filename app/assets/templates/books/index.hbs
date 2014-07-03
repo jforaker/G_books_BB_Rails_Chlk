@@ -10,7 +10,10 @@
                             <a class="gn-icon gn-icon-search"><span>Search</span></a>
                         </li>
                         <li>
-                            <a href="#topics" class="gn-icon gn-icon-archive">Topics</a>
+                            <a href="#topics" class="gn-icon gn-icon-download closed">Topics</a>
+                            <ul class="gn-submenu" id="dropper">
+                                <!--topics-->
+                            </ul>
                         </li>
                         <li id="myBooks">
                             <!--wants-->
@@ -26,9 +29,15 @@
 
 <br>
 
-<div class="flasher">
-    <p>Successfully attached, Just click attach!</p>
+<div id="flasher" class="col-sm-6 col-md-6">
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> ×</button>
+        <span class="glyphicon glyphicon-ok"></span> <strong>Success</strong>
+        <hr class="message-inner-separator">
+        <p> </p>
+    </div>
 </div>
+
 <ul class="bookshelf"></ul>
 <ul id="topics" style="margin-top: 100px"></ul>
 <div class="rower">
@@ -43,6 +52,7 @@
         <div id="viewer" style="height: 600px"></div>
     </div>
 </div>
+
 
 
 

@@ -10,7 +10,7 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
     initialize : function() {
       //  _.bindAll(this, "render", "showModal", "showBook","pushstateClick", "closeMe", "hideModaler");
-        this.listenTo(this.model, 'set');
+        this.listenTo(this.model, 'save');
           _.bindAll(this, "render", "showModal","pushstateClick", "closeMe", "hideModaler" , "wantClick");
 
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
@@ -64,11 +64,10 @@ GoogleBooks.Views.Details = Backbone.View.extend({
     wantClick: function(e){
         e.preventDefault();
         $('.window-overlay').hide();
-
         var model = this.model;
         model.set({
             wantToRead: true,
-            readerLink: model.attributes.readerLink
+            readerLink: model.get('readerLink')
         });
         model.save();
         console.log(model);

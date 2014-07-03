@@ -12,14 +12,19 @@
         {{/if}}
     </div>
     <figcaption>
-        <h2 class="title"> {{title}} <span>{{author}}</span></h2>
+        <h2 class="title">
+            {{title}}
+            <span>{{author}}</span>
+        </h2>
     </figcaption>
 
     <div class="details">
         <ul>
             <li><a href="#" class="deets gn-icon gn-icon-article">Look inside</a></li>
             <li>published {{publishedDate}}</li>
-            <li>{{pageCount}} pages</li>
+            {{#if pageCount}}
+                <li> pages </li>
+            {{/if}}
         </ul>
         <span class="close-details"></span>
         <span id='remove-book'>remove from My Library</span>

@@ -81,29 +81,16 @@
             classie.add( this.trigger, 'gn-selected' );
             this.isMenuOpen = true;
             classie.add( this.menu, 'gn-open-all' );
+            $('.gn-icon-download').removeClass('closed');
             this._closeIconMenu();
-
-
-//            var w = $(this.menu).width();
-//            var cont =  $('#container');
-//            cont.css('width', cont.width() - w*2)
         },
         _closeMenu : function() {
             if( !this.isMenuOpen ) return;
             classie.remove( this.trigger, 'gn-selected' );
             this.isMenuOpen = false;
             classie.remove( this.menu, 'gn-open-all' );
+            $('.gn-icon-download').addClass('closed');
             this._closeIconMenu();
-
-            var w = $(this.menu).width();
-//            var cont =  $('#container');
-//            console.log(cont.width())
-//
-//            cont.css('width', cont.width() + w)
-//
-//            var count = 0;
-//            count++
-//            console.info(count)
         }
     };
 
