@@ -26,6 +26,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
 
         console.info(url.data.param.query);
         CHLK_ANN_ID =  url.data.param.query.announcementapplicationid;
+        console.log(CHLK_ANN_ID)
 
         switch (mode){
             case  "myview":
@@ -85,15 +86,20 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     },
 
     showAttached: function(id){
-        var detailsView = new GoogleBooks.Views.Details({
-            model: new Backbone.Model({
-                id: id
-            })
-        });
-        console.log(detailsView);
-        detailsView.initialize();
 
-        return  detailsView.render(id);
+        //detailsView.initialize();
+        var ren = '';
+        setTimeout(function(){
+            var detailsView = new GoogleBooks.Views.Details({
+                model: new Backbone.Model({
+                    id: id
+                })
+            });
+            console.log(detailsView);
+            ren =  detailsView.render(id).el;
+            detailsView.delegateEvents();
+        }, 5);
+        return ren
     },
 
 
@@ -106,7 +112,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
     },
 
     getMyBooks: function(){
-        var myBooksView = new GoogleBooks.Views.Wants();
+        var myBooksView = new GoogleBooks.Views.MyLibrary();
         myBooksView.render();
     },
 

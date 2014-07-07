@@ -22,15 +22,15 @@ GoogleBooks.Views.Book = Backbone.View.extend({
 
     render : function() {
 
-        var attr = this.model.attributes;
+        var mod = this.model;
         $(this.el).html(this.template({
             mode : CHLK_MODE,
             user_role: CHLK_USER_ROLE,
-            title: attr.title,
-            thumbnail: attr.thumbnail,
-            author: attr.author,
-            pageCount: attr.pageCount,
-            publishedDate: attr.publishedDate
+            title: mod.get('title'),
+            thumbnail: mod.get('thumbnail'),
+            author: mod.get('author'),
+            pageCount: mod.get('pageCount') != ''? mod.get('pageCount') : false,
+            publishedDate: mod.get('publishedDate')
         }));
 
         return this;

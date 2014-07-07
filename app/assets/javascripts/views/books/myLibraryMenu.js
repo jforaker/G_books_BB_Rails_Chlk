@@ -16,15 +16,15 @@ GoogleBooks.Views.MyLibraryMenu = Backbone.View.extend({
         wantsArr.push(getWants);
         console.log(wantsArr);
 
-        return wantsArr[0].length || '0';
+        return wants.number;
     },
 
     initialize : function() {
 
         this.model = new GoogleBooks.Models.Book();
         var c = this.collection;
-        this.listenTo(this.model, "all", this.render, this.getCount());
-
+        this.listenTo(this.model, 'change', this.render);
+        this.model.bind('change', _.bind(this.render, this));
         return this.listenTo(c, 'all', this.render, this.getCount());
     },
 

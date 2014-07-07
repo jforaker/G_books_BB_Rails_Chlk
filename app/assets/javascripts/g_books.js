@@ -15,6 +15,10 @@ window.GoogleBooks = {
 $(document).ready(function(){
     GoogleBooks.initialize();
 
+    $('body').find('.window-overlay').click(function(){
+        $(this).hide();
+    });
+
 
 //
 //    function cb(){

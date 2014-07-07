@@ -3,14 +3,17 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
     template: JST['books/index'],
     el: "#container",
     events : {
-        'keypress #add-item': 'createOnEnter'
-       // 'keyup': 'searchAutocomplete'
+        'keypress #add-item': 'createOnEnter',
+        'keyup': 'searchAutocomplete'
     },
 
     initialize : function() {
 
-        this.listenTo(this.collection, 'reset', this.render);
-        return this.listenTo(this.collection, 'add', this.addBook);
+                                                 //TODO -- I REMOVED FREE EBOOKS IN SEARCH ??
+
+        this.listenTo( this.collection, 'add', this.addBook );
+        this.listenTo( this.collection, 'reset', this.render );
+
     },
 
     render : function() {
@@ -67,7 +70,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
         $(function(){
             var $searchForm = $('#add-item'),
                 term = $searchForm.val(),
-                url = 'https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(term)+'&filter=free-ebooks&maxResults=8&key='+that.vars().API_KEY;
+                url = 'https://www.googleapis.com/books/v1/volumes?q='+encodeURIComponent(term)+'&filter=free-ebooks&maxResults=10&key='+that.vars().API_KEY;
             $($searchForm).autocomplete({
                 minLength: 3,
                 source: function( request, response ) {
@@ -86,19 +89,33 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
                                 img: thumb
                             });
                         });
+                        dropdown = _.uniq(dropdown);
                         response(dropdown);
                     });
                 },
                 select: function( event, ui ) {
                     console.log(arguments);
-                    that.queryApi(ui.item.value, index='0', 12);
+                    //that.queryApi(ui.item.value, index='0', 12);
 
-//                    var id = ui.id;
-//                    var detailsView = new GoogleBooks.Views.Details({
-//                            //model: ui.item
-//                        });
-//                    console.log(detailsView);
-//                    return $('body').find("#details").html(detailsView.renderModal(id));
+
+                    var id = ui.item.id;
+                    var menu =  document.getElementById('gn-menu')
+                    var detailsView = new GoogleBooks.Views.Details({
+                        model: new Backbone.Model({
+                            id: id
+                        })
+                    });
+                    console.log(detailsView);
+                    setTimeout(function(){
+                        detailsView.render(id).$el;
+                    }, 50);
+
+                    $searchForm.blur();
+                    $searchForm.val('');
+                    $(menu).removeClass('gn-open-all');
+
+
+
                 },
                 close: function( event, ui ) {
                     $searchForm.val('');
@@ -134,7 +151,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
          Backbone.history.navigate('/search');
         e.preventDefault();
         $('.bookshelf').fadeIn();
-        //$('.gn-menu-wrapper').removeClass('gn-open-all');
+        $('.gn-menu-wrapper').removeClass('gn-open-all');
 
 
         this.queryApi(query, 0, this.vars().MAX_DEFAULT);
@@ -158,12 +175,13 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             url = 'https://www.googleapis.com/books/v1/volumes?',
             data = 'q='+encodeURIComponent(term)
                 +'&startIndex='+index+'&maxResults='+maxResults
-                +'&filter=free-ebooks&key='
+                //+'&filter=free-ebooks'
+                +'&key='
                 +this.vars().API_KEY+'&projection=full';
 
-        bookRow.find('.book-holder').attr('data-something', 'from-search').fadeOut('slow').remove();
+        bookRow.find('.book-holder').attr('data-something', 'from-search').hide().remove();
 
-        bookRow.find('.rower').fadeOut('slow');
+        bookRow.find('.rower').hide();
         bookRow.html('');
         bookRow.append(spinner);
         spinner.show();
@@ -196,6 +214,7 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
 
                         var book = new GoogleBooks.Models.Book(itemInfo);
                         Books.add(book);
+
                     } else {
                         emptyBooks++;
                     }

@@ -72,6 +72,7 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
     @item = current_user.books.build(book_params)
+    @item.id = params[:_id]
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -93,7 +94,7 @@ class BooksController < ApplicationController
 
         #if @item.update_attributes(params[item_params])
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @item, status: :created, location: @item }
       else
         format.html { render action: "edit" }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -116,7 +117,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:id, :created_at, :updated_at, :user_id, :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink, :author, :pageCount, :publishedDate)
+    params.require(:book).permit(:id, :_id, :created_at, :updated_at, :user_id, :thumbnail, :title, :volumeInfo, :wantToRead, :readerLink, :author, :pageCount, :publishedDate)
   end
 
   def allow_iframe

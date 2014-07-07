@@ -1,6 +1,5 @@
 GoogleBooks.Views.Topics = Backbone.View.extend({
 
-//    el: "#topics",
     el : 'UL#dropper', //list item that controls the books in the #all-wants div
 
     tagName: 'li',
@@ -33,7 +32,7 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
     },
 
     query: function(val){
-        var items = new GoogleBooks.Collections.MyBooksCollection();
+        var items = new GoogleBooks.Collections.Items();
         var view = new GoogleBooks.Views.ItemsIndex({
             collection: items
         });
@@ -45,5 +44,16 @@ GoogleBooks.Views.Topics = Backbone.View.extend({
         this.query(name);
         $('.rower').find('#all-wants').hide();
 
+    } ,
+
+    addBook : function(book) {
+        var bookView = new GoogleBooks.Views.Book({
+            model: book
+        });
+        var bookEl = bookView.render().el ;
+        $(bookEl).attr("data-something", "from-search");
+        $('.bookshelf').append(bookEl);
+        $('ui-autocomplete').hide();
+        return this;
     }
 });

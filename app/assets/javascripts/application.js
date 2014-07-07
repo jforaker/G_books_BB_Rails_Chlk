@@ -35,6 +35,7 @@
 //= require_tree ./routers
 //= require_tree ../templates/
 
-$('body').find('.window-overlay').click(function(){
-    $('.window-overlay').hide();
+Backbone.Events.on('test', function(){ alert('I am appleboy'); });
+$(document).on('click', '.add_1', function(event){
+    Backbone.Events.trigger('test');
 });

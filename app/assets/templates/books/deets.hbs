@@ -1,8 +1,10 @@
 <div class="window-overlay">
     <div class="modal-header">
         <button id="closer" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="want-button" type="button" class="btn btn-primary">Add to library</button>
+        {{#if mode}}
+            <!--if its attached to new item, hide the add button?-->
+            <button id="want-button" type="button" class="btn btn-primary">Add to library</button>
+        {{/if}}
     </div>
     <div id="viewer" style="height: 600px"></div>
-
 </div>

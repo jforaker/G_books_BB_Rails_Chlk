@@ -1,5 +1,6 @@
 GoogleBooks.Views.Details = Backbone.View.extend({
     el : '#details',
+    className: '.window-overlay',
     template : JST['books/deets'],
     events: {
         "click .close" : 'pushstateClick',
@@ -10,7 +11,8 @@ GoogleBooks.Views.Details = Backbone.View.extend({
 
     initialize : function() {
       //  _.bindAll(this, "render", "showModal", "showBook","pushstateClick", "closeMe", "hideModaler");
-        this.listenTo(this.model, 'save');
+//        this.collection = new GoogleBooks.Collections.Items();
+//        this.listenTo( this.collection, 'add', this.addBook );
           _.bindAll(this, "render", "showModal","pushstateClick", "closeMe", "hideModaler" , "wantClick");
 
         Backbone.history.navigate('/details/' + ( typeof this.model.attributes.id != "undefined" ? this.model.attributes.id : ''));
@@ -21,10 +23,9 @@ GoogleBooks.Views.Details = Backbone.View.extend({
         var attr = this.model.attributes;
         var id = attr.readerLink;
         $(this.el).html(this.template({
-            title: attr.title || '',
-            thumbnail: attr.thumbnail || '',
-            readerLink: attr.readerLink  || ''
+            mode: i ? false : true
         }));
+        console.log(arguments)
         that.showModal(typeof id == 'undefined' ? i : id);
         return this;
     },
@@ -70,6 +71,7 @@ GoogleBooks.Views.Details = Backbone.View.extend({
             readerLink: model.get('readerLink')
         });
         model.save();
+
         console.log(model);
     }
 });
