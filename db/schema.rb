@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701153651) do
+ActiveRecord::Schema.define(version: 20140708220043) do
 
   create_table "announcements", force: true do |t|
     t.string   "announcement_application_id"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140701153651) do
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",    limit: 255
+    t.integer  "user_id"
   end
 
 end
