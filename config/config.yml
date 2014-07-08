@@ -1,5 +1,5 @@
 development:
-  acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13
+  acs_url: https://chalkable-qa-access-control.accesscontrol.windows.net/v2/OAuth2-13
   client_id: http://0.0.0.0:5000/start
   client_secret: d54012f4c346482d8ebd36936f2b18fe97c25156a42746dd95288cf01beac3381c3a457c119c4bcf82478e1c87f4bfcf69c6e7cd4a8d4831b512135a98be61c7
   scope: https://chalkable.com
