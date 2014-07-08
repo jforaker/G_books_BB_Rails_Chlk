@@ -2,4 +2,3 @@ h3. Google Books for Chalkable
 
 Rails + Backbone + Google Books API + Chalkable API
 
-//TODO - authenticate on Chalkable, save applicationAnnouncementId, check params for 'mode' to render student view 
