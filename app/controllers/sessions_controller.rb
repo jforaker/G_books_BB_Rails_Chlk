@@ -92,7 +92,7 @@ class SessionsController < ApplicationController
   def get_current_user(access_token)
     begin
       puts access_token
-      response = RestClient.get('https://chalkable.com/Person/Me.json', :authorization => "Bearer:" + access_token)
+      response = RestClient.get(APP_CONFIG['service_url'], :authorization => "Bearer:" + access_token)
 
       puts response
       session[:name] = JSON.parse(response)['data']['displayname']
