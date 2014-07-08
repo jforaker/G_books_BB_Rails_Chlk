@@ -55,6 +55,9 @@ class SessionsController < ApplicationController
 
     puts code_url_param
     puts APP_CONFIG['acs_url']
+    puts APP_CONFIG['client_id']
+    puts APP_CONFIG['client_secret']
+    puts APP_CONFIG['scope']
 
     begin
       options =   { :body => {
