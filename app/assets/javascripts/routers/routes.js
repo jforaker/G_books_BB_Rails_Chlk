@@ -83,8 +83,6 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                     }
                 });
                 break;
-
-            //TODO -- come back to VIEW when it is fixed
         }
 
 
@@ -92,9 +90,9 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             url: '/books.json',
             dataType: 'json',
             success: function (data) {
-                console.log(data)
+                console.log(data);
                 CHLK_USER.name = data.user;
-                CHLK_USER_ROLE = (data.role == "student") ? false : true
+                CHLK_USER_ROLE = (data.role != "student")
             }
         });
 
@@ -115,7 +113,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             console.log(detailsView);
             ren =  detailsView.render(id).el;
             detailsView.delegateEvents();
-        }, 250);
+        }, 75);
         return ren
     },
 

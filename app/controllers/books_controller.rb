@@ -5,12 +5,9 @@ class BooksController < ApplicationController
 
   respond_to :html, :xml, :json
 
-
-
   def index
 
     @items = current_user.books
-
 
     mode = params[:mode].to_s
 
@@ -22,11 +19,11 @@ class BooksController < ApplicationController
     @announcement_application_id = params[:announcementapplicationid].to_i
 
     # get the student id of the current student's assignment (if viewing it as a teacher in the 'view' mode)
-    @student_id = params[:studentid]
+    #@student_id = params[:studentid]
 
-    if params.has_key?(:studentid)
-      get_student_info(@student_id, @access_token)
-    end
+    #if params.has_key?(:studentid)
+    #  get_student_info(@student_id, @access_token)
+    #end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -37,8 +34,6 @@ class BooksController < ApplicationController
     end
 
   end
-
-
 
 
   # GET /books/1
