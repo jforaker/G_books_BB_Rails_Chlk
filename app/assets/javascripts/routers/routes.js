@@ -50,8 +50,8 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                         announcementapplicationid : CHLK_ANN_ID
                     },
                     success: function (data) {
-                        console.info(data)
-                        if (!data) this.failure(data)
+                        console.info(data);
+                        if (!data) this.failure(data);
                         var g_books_id = data.g_books_id;
 
                         that.showAttached(g_books_id)
@@ -65,6 +65,23 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             case "view":
                 console.info('view ======');
                 CHLK_MODE = "view";
+                $.ajax({
+                    url: '/announcements/' + CHLK_ANN_ID + '.json',
+                    dataType: 'json',
+                    data: {
+                        announcementapplicationid : CHLK_ANN_ID
+                    },
+                    success: function (data) {
+                        console.info(data);
+                        if (!data) this.failure(data);
+                        var g_books_id = data.g_books_id;
+
+                        that.showAttached(g_books_id)
+                    },
+                    failure: function(data){
+                        console.log('get announcemment fail ')
+                    }
+                });
                 break;
 
             //TODO -- come back to VIEW when it is fixed
@@ -98,7 +115,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             console.log(detailsView);
             ren =  detailsView.render(id).el;
             detailsView.delegateEvents();
-        }, 5);
+        }, 250);
         return ren
     },
 
