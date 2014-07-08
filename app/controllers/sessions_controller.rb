@@ -65,7 +65,7 @@ class SessionsController < ApplicationController
           :grant_type => 'authorization_code'
       }}
       oauth_response = HTTParty.post(
-          'https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13',
+          APP_CONFIG['acs_url'],
           options
       )
     rescue => e
