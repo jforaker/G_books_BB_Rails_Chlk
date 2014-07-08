@@ -1,14 +1,14 @@
 development:
   acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13
   client_id: http://0.0.0.0:5000/start
-  client_secret: 83f4cfc82ad340f1a330513207dbb21a12226378c4774c1282157aaaddb301a44ae3553555024e34a30053cbc8e7a45e5e5c402fced64533a81175d7850aad8a
+  client_secret: d54012f4c346482d8ebd36936f2b18fe97c25156a42746dd95288cf01beac3381c3a457c119c4bcf82478e1c87f4bfcf69c6e7cd4a8d4831b512135a98be61c7
   scope: https://chalkable.com
   redirect_uri: http://0.0.0.0:5000/start
   service_url: https://chalkable.com/Person/Me.json
 production:
   acs_url: https://chalkable-qa-access-control.accesscontrol.windows.net/v2/OAuth2-13
   client_id: http://mysterious-anchorage-1858.herokuapp.com/start
-  client_secret: 5ee3880632f943b1b7999de04d8a9c0b438897e891ac47b5a66b274a50050b027b504468fd9846d3a741247509eadaae4b4330d1309e4b8dbcb6ba56e2f284e8
+  client_secret: d54012f4c346482d8ebd36936f2b18fe97c25156a42746dd95288cf01beac3381c3a457c119c4bcf82478e1c87f4bfcf69c6e7cd4a8d4831b512135a98be61c7
   scope: https://qa.chalkable.com
   redirect_uri: http://mysterious-anchorage-1858.herokuapp.com/start
   service_url: https://qa.chalkable.com/Person/Me.json
