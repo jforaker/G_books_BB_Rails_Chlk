@@ -17,9 +17,6 @@ $(document).ready(function(){
     CHLK_ANN_ID ={};
     CHLK_USER_ROLE ={};
     CHLK_MODE = {};
-
-    GoogleBooks.initialize();
-
     $.ajax({
         url: '/books.json',
         dataType: 'json',
@@ -29,6 +26,10 @@ $(document).ready(function(){
             CHLK_USER_ROLE = data.role != "student"
         }
     });
+
+    GoogleBooks.initialize();
+
+
 
 //
 //    function cb(){

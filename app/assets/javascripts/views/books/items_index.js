@@ -55,9 +55,10 @@ GoogleBooks.Views.ItemsIndex = Backbone.View.extend({
             });
         } else {
             initPlugins();
+            var name = ('undefined' != CHLK_USER.name ? CHLK_USER.name : 'there');
             var row = $('<div class="rowerg"></div> ');
             $(that.$el.find('.bookshelf').append(row));
-            row.html('Hi ' +CHLK_USER.name + ', welcome to Google Books Reader. Search for a book and add it to your library.');
+            row.html('Hi ' + name + ', welcome to Google Books Reader. Search for a book and add it to your library.');
 
         }
     },
