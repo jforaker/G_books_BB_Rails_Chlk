@@ -108,7 +108,7 @@ class SessionsController < ApplicationController
 
       user.attributes = {:email => e, :user_id => u_id, :name => name, :uid => role}
 
-      # After this, first_or_create will call user.create, so you don't have to
+      # After this, first_or_create will call user.create, so you don't have to..
 
       redirect_to '/books'
     end
