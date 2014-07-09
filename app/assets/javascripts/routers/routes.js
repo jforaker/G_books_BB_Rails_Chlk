@@ -75,7 +75,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
             dataType: 'json',
             success: function (data) {
                 console.log(data)
-                CHLK_USER.name = data.user;
+                CHLK_USER.name = data.user || 'there';
                 CHLK_USER_ROLE = (data.role == "student") ? false : true
             }
         });
