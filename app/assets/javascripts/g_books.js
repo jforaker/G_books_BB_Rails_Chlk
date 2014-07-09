@@ -13,8 +13,22 @@ window.GoogleBooks = {
 };
 
 $(document).ready(function(){
+    CHLK_USER = {};
+    CHLK_ANN_ID ={};
+    CHLK_USER_ROLE ={};
+    CHLK_MODE = {};
+
     GoogleBooks.initialize();
 
+    $.ajax({
+        url: '/books.json',
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            CHLK_USER.name = data.user || 'there';
+            CHLK_USER_ROLE = data.role != "student"
+        }
+    });
 
 //
 //    function cb(){
