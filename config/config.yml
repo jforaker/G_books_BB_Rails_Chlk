@@ -1,9 +1,10 @@
 development:
+#Demo Google Books
   acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13
-  client_id: http://0.0.0.0:5000/start
-  client_secret: 83f4cfc82ad340f1a330513207dbb21a12226378c4774c1282157aaaddb301a44ae3553555024e34a30053cbc8e7a45e5e5c402fced64533a81175d7850aad8a
+  client_id: http://0.0.0.0:3000/start
+  client_secret: fa8a85d2db9d41b68b090f92bb12f6390c4b59cd7eee4518a7b4d9069756a3bcec9b1108bf3b44b5ad343093042750524f38343cb17f49c287ab792d99fd3aed
   scope: https://chalkable.com
-  redirect_uri: http://0.0.0.0:5000/start
+  redirect_uri: http://0.0.0.0:3000/start
   service_url: https://chalkable.com/Person/Me.json
 production:
   acs_url: https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13

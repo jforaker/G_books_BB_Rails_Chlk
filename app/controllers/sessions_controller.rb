@@ -54,6 +54,10 @@ class SessionsController < ApplicationController
     end
 
     puts code_url_param
+    puts APP_CONFIG['acs_url']
+    puts APP_CONFIG['client_id']
+    puts APP_CONFIG['client_secret']
+    puts APP_CONFIG['scope']
 
     begin
       options =   { :body => {
@@ -65,7 +69,7 @@ class SessionsController < ApplicationController
           :grant_type => 'authorization_code'
       }}
       oauth_response = HTTParty.post(
-          'https://chalkable-access-control.accesscontrol.windows.net/v2/OAuth2-13',
+          APP_CONFIG['acs_url'],
           options
       )
     rescue => e
@@ -88,7 +92,7 @@ class SessionsController < ApplicationController
   def get_current_user(access_token)
     begin
       puts access_token
-      response = RestClient.get('https://chalkable.com/Person/Me.json', :authorization => "Bearer:" + access_token)
+      response = RestClient.get(APP_CONFIG['service_url'], :authorization => "Bearer:" + access_token)
 
       puts response
       session[:name] = JSON.parse(response)['data']['displayname']

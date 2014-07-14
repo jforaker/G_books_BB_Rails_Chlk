@@ -16,17 +16,16 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
         console.log("[setDefault]");
         //Backbone.history.navigate('home');
 
-        CHLK_USER = {};
-        CHLK_ANN_ID ={};
-        CHLK_USER_ROLE ={};
-        CHLK_MODE = {};
+
 
         var url = $.url();
         var mode = url.data.param.query.mode;
 
         console.info(url.data.param.query);
         CHLK_ANN_ID =  url.data.param.query.announcementapplicationid;
-        console.log(CHLK_ANN_ID)
+        console.log(CHLK_ANN_ID);
+
+
 
         switch (mode){
             case  "myview":
@@ -84,17 +83,6 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                 });
                 break;
         }
-
-
-        $.ajax({
-            url: '/books.json',
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                CHLK_USER.name = data.user;
-                CHLK_USER_ROLE = (data.role != "student")
-            }
-        });
 
         that.index();
 
