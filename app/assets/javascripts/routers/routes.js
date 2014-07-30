@@ -61,7 +61,7 @@ GoogleBooks.Routers.AppRouter = Backbone.Router.extend({
                 break;
 
             case "view":
-                console.info('view ======');
+                console.info('view ====== >>>>');
                 CHLK_MODE = "view";
                 $.ajax({
                     url: '/announcements/' + CHLK_ANN_ID + '.json',
